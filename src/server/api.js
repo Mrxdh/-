@@ -1,5 +1,4 @@
 import { apiGET, apiPOST } from './server'
-// export const BASE = 'https://xuyi-crayfish.com'
 export const BASE = 'https://kfx-tech.com'
 // export const BASE = 'http://localhost:8076'
 export const BASE_URL = `${BASE}/lobster`
