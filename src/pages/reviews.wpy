@@ -1,0 +1,59 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+    padding: 0 30rpx;
+  }
+
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{comments}}" key="index" index="index" item="item">
+      <review :reviewObj.sync="item" />
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Review from '@/view/review'
+  import * as api from '@/server/api'
+  
+  @connect({
+  })
+
+  export default class Reviews extends wepy.page {
+    config = {
+      navigationBarTitleText: '全部评价'
+    }
+    components = {
+      review: Review
+    }
+
+    data = {
+      comments: []
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      const { productId } = options
+      api.getProComment({
+        proId: productId
+      }).then(({body}) => {
+        this.comments = body.comment
+        console.log(body.comment, '  bodycomment')
+        this.$apply()
+      })
+    }
+  }
+</script>

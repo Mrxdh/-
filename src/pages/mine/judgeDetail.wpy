@@ -1,0 +1,317 @@
+<style lang="scss">
+  .container {
+    width: 750rpx;
+    padding-top: 15rpx;
+  }
+  .judgeItem {
+    width: 710rpx;
+    height: 596rpx;
+    box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+    background-color: #fcfcfc;
+    border-radius: 6rpx;
+      .judgeItem-top {
+        width: 650rpx;
+        height: 99rpx;
+        border-bottom: 1rpx solid rgba(30,40,48,0.1);
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0 15rpx;
+        margin: 0 auto;
+          image {
+            display: block;
+            width: 60rpx;
+            height: 60rpx;
+          }
+          text {
+            font-size: 26rpx;
+            color: #333;
+            margin-left: 20rpx;
+          }
+      }
+      .judgeItem-bling {
+        width: 680rpx;
+        height: 110rpx;
+        padding: 0 15rpx;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+          text {
+            font-size: 22rpx;
+            color: #4A4A4A;
+            line-height: 30rpx;
+          }
+          .judgeItem-bling-start {
+            width: 64rpx;
+            height: 64rpx;
+            position: relative;
+              image {
+                width: 36rpx;
+                height: 34rpx;
+                position: absolute;
+                left: 50%;
+                margin-left: -18rpx;
+                top: 50%;
+                margin-top: -17rpx;
+              }
+          }
+      }
+      .judgeItem-text {
+        width: 670rpx;
+        height: 264rpx;
+        background-color: #fff;
+        border: 1rpx solid #F7F7F7;
+        border-radius: 5rpx;
+        margin: 0 auto;
+         textarea {
+           width: 630rpx;
+           height: 110rpx;
+           padding: 20rpx;
+           font-size: 24rpx;
+           color: #333;
+           line-height: 33rpx;
+         }
+          .judgeItem-picBox {
+            width: 630rpx;
+            height: 114rpx;
+            padding: 0 20rpx;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            .judgeItem-picAddBox {
+              height: 100rpx;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-start;
+                .judgeItem-picItem {
+                  width: 100rpx;
+                  height: 100rpx;
+                  margin-right: 40rpx;
+                  position: relative;
+                  .judgeItem-picItem-content {
+                    display: block;
+                    width: 100rpx;
+                    height: 100rpx;
+                  }
+                  .judgeItem-picItem-x {
+                    position: absolute;
+                    display: block;
+                    width: 32rpx;
+                    height: 32rpx;
+                    right: -10rpx;
+                    top: -10rpx;
+                  }
+                }
+            }
+            .judgeItem-picAdd {
+              width: 99rpx;
+              height: 99rpx;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              border: 1px solid #E1E6EA;
+              border-radius: 4px;
+                image {
+                  display: block;
+                  width: 33rpx;
+                  height: 33rpx;
+                }
+            }
+          }
+      }
+    .judgeItem-bottom {
+      width: 670rpx;
+      height: 120rpx;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-direction: row;
+        text {
+          display: block;
+          text-align: center;
+          width: 156rpx;
+          height: 60rpx;
+          background-color: rgba(255,96,0,0.08);
+          border-radius: 4rpx;
+          font-size: 24rpx;
+          color: #ff6000;
+          line-height: 60rpx;
+        }
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="judgeItem">
+      <view class="judgeItem-top">
+        <image src="{{ commentTitlePic }}"></image>
+        <text>{{ commentTitle }}</text>
+      </view>
+      <view class="judgeItem-bling">
+        <text>总体感觉：</text>
+        <view @tap.stop="changeStart(1)" class="judgeItem-bling-start">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/huixin@2x.png"></image>
+          <image wx:if="{{startNum>=1}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/xin@2x.png"></image>
+        </view>
+        <view @tap.stop="changeStart(2)" class="judgeItem-bling-start">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/huixin@2x.png"></image>
+          <image wx:if="{{startNum>=2}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/xin@2x.png"></image>
+        </view>
+        <view @tap.stop="changeStart(3)" class="judgeItem-bling-start">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/huixin@2x.png"></image>
+          <image wx:if="{{startNum>=3}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/xin@2x.png"></image>
+        </view>
+        <view @tap.stop="changeStart(4)" class="judgeItem-bling-start">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/huixin@2x.png"></image>
+          <image wx:if="{{startNum>=4}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/xin@2x.png"></image>
+        </view>
+        <view @tap.stop="changeStart(5)" class="judgeItem-bling-start">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/huixin@2x.png"></image>
+          <image wx:if="{{startNum>=5}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/xin@2x.png"></image>
+        </view>
+      </view>
+      <view class="judgeItem-text">
+        <textarea bindinput="bindDetailAddress" placeholder="还想说点啥（选填）" value="{{ commentContent }}"></textarea>
+        <view class="judgeItem-picBox">
+          <view class="judgeItem-picAddBox">
+          <view wx:for="{{ upImg }}" wx:for-item="itemUrl" class="judgeItem-picItem">
+            <image class="judgeItem-picItem-content" src="{{'http://p5it0fwv0.bkt.clouddn.com/' + itemUrl}}"></image>
+            <image data-id="{{ index }}" class="judgeItem-picItem-x" @tap.stop="deleteImg" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/shanchu_xiao@2x.png"></image>
+          </view>
+          </view>
+          <view @tap.stop="addPic" class="judgeItem-picAdd">
+            <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/camera_add.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="judgeItem-bottom">
+        <text @tap.stop="submitData">提交评论</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api.js'
+  import qiniu from '@/util/qiniuUploader.js'
+  import * as mineMethods from '@/util/mine.js'
+  @connect({
+  })
+
+  export default class judgeDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '评价'
+    }
+    components = {
+    }
+    data = {
+      startNum: 2,
+      commentId: null,
+      commentTitlePic: '',
+      commentTitle: '',
+      commentContent: '',
+      uploadToken: '',
+      upImg: []
+    }
+
+    computed = {
+    }
+
+    methods = {
+      submitData: function () {
+        var _this = this
+        var imgArr = _this.upImg.join(',')
+        wepy.showLoading({
+          title: '提交中'
+        })
+        api.subJudge({
+          orderNo: _this.commentId,
+          comment: _this.commentContent,
+          starts: _this.startNum,
+          pickeys: imgArr
+        }).then((body) => {
+          wepy.hideLoading()
+          if (body.result.code === '1') {
+            mineMethods.alertToast('评论成功', 'none')
+            wepy.switchTab({
+              url: 'mine'
+            })
+          }
+        }, () => {
+          wepy.hideLoading()
+        })
+      },
+      changeStart: function (num) {
+        this.startNum = num
+      },
+      deleteImg: function (event) {
+        var _this = this
+        var _thisId = event.currentTarget.dataset.id
+        wepy.showModal({
+          title: '提示：',
+          content: '确认删除吗？'
+        }).then((res) => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            console.log(_thisId)
+            _this.upImg.splice(_thisId, 1)
+            _this.$apply()
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        })
+      },
+      addPic: function () {
+        var _this = this
+        if (_this.upImg.length >= 3) {
+          mineMethods.alertToast('最多只能传三张', 'none')
+          return
+        }
+        var addToken = _this.uploadToken
+        qiniu.init({
+          uptoken: addToken,
+          region: 'ECN'
+        })
+        console.log('addToken => ' + addToken)
+        wepy.chooseImage({
+          count: 1
+        }).then((res) => {
+          var filePath = res.tempFilePaths[0]
+          qiniu.upload(filePath, (res) => {
+//            var imgUrl = 'http://p5it0fwv0.bkt.clouddn.com/' + res.key
+            _this.upImg.push(res.key)
+            _this.$apply()
+          })
+        }, (error) => {
+          console.log(1111)
+          console.error('error: ' + JSON.stringify(error))
+        })
+      },
+      bindDetailAddress: function (event) {
+        this.commentContent = event.detail.value
+      }
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      var _this = this
+      this.commentId = options.orderno
+      this.commentTitle = options.name
+      this.commentTitlePic = options.pic
+      api.getToken().then((body) => {
+        _this.uploadToken = body.body.upToken
+        this.$apply()
+      })
+    }
+  }
+</script>

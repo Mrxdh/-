@@ -1,0 +1,48 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+    > image {
+      width: 100%;
+    }
+  }
+
+</style>
+<template>
+  <view class="container">
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/1.jpg" />
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/2.jpg" />
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/3.jpg" />
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/4.jpg" />
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/5.jpg" />
+      <image mode="widthFix" src="https://media-ssl.kuban.io/static/file/2/xlx/6.jpg" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Introduce extends wepy.page {
+    config = {
+      navigationBarTitleText: '介绍'
+    }
+    components = {
+    }
+
+    data = {
+      shopObj: {}
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+    }
+  }
+</script>

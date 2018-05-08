@@ -1,0 +1,254 @@
+<style lang="scss">
+  .addressItem {
+    width: 680rpx;
+    height: 271rpx;
+    background-color: #FCFCFC;
+    border-radius: 6rpx;
+    box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+    margin-bottom: 40rpx;
+    padding: 0 15rpx;
+  }
+  .addressItem-top {
+    width: 680rpx;
+    height: 156rpx;
+    padding-top: 30rpx;
+    border-bottom: 1rpx solid rgba(30,40,48,0.04);
+      .addressItem-top-title {
+        width: 650rpx;
+        height: 42rpx;
+        font-size: 30rpx;
+        margin: 0 auto;
+        color: #333;
+          .addressItem-top-title-name {
+            float: left;
+          }
+          .addressItem-top-title-phone {
+            float: right;
+          }
+      }
+      .addressItem-top-content {
+        width: 650rpx;
+        height: 76rpx;
+        margin: 0 auto;
+        color: #333;
+        font-size: 26rpx;
+        line-height: 32rpx;
+        margin-top: 20rpx;
+          .addressItem-top-content-title {
+            width: 140rpx;
+            float: left;
+          }
+          .addressItem-top-content-content {
+            width: 510rpx;
+            float: left;
+          }
+          .addressItem-top-content-content-r {
+            width: 510rpx;
+            display: inline;
+            color: #EE6723;
+          }
+      }
+  }
+  .addressItem-bottom {
+    width: 650rpx;
+    height: 36rpx;
+    margin-top: 24rpx;
+    .addressItem-bottom-checked {
+      height: 36rpx;
+      position: relative;
+      font-size: 0;
+      float: left;
+      image {
+        position: absolute;
+        left: 0;
+        top: 1rpx;
+        width: 34rpx;
+        height: 34rpx;
+      }
+      text {
+        padding-left: 44rpx;
+        font-size: 24rpx;
+        color: #8D9092;
+        line-height: 36rpx;
+      }
+    }
+    .addressItem-remove {
+      width: 36rpx;
+      height: 36rpx;
+      float: right;
+    }
+    .addressItem-edit {
+      width: 36rpx;
+      height: 36rpx;
+      float: right;
+      margin-right: 60rpx;
+    }
+  }
+  .addAddress {
+    width: 750rpx;
+    height: 94rpx;
+    background-color: #1E2830;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+      text {
+        font-size: 36rpx;
+        color: #fff;
+        line-height: 94rpx;
+        text-align: center;
+        font-weight: 600;
+      }
+  }
+</style>
+<template>
+  <view class="container" style="padding-top: 20rpx; padding-bottom: 94rpx;">
+    <block wx:for="{{addressArray}}">
+      <view class="addressItem" style="{{mode === 'choose' ? 'height:132rpx' : ''}}">
+        <view class="addressItem-top" @tap="chooseAddress({{item}})">
+          <view class="addressItem-top-title">
+            <text class="addressItem-top-title-name">{{'收货人：' + item.name}}</text>
+            <text class="addressItem-top-title-phone">{{ item.phone }}</text>
+          </view>
+          <view class="addressItem-top-content">
+            <text class="addressItem-top-content-title">{{'收货地址：'}}</text>
+            <text class="addressItem-top-content-content"><text wx:if="{{mode === 'choose' && checked == item.id}}" class="addressItem-top-content-content-r">(默认地址)</text>{{ item.province + item.city + item.address }}</text>
+          </view>
+        </view>
+        <view class="addressItem-bottom" wx:if="{{mode !== 'choose'}}">
+          <view data-id="{{item.id}}" @tap.stop="checkedAddress" class="addressItem-bottom-checked">
+            <image wx:if="{{checked != item.id}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/yuan@2x.png" alt=""></image>
+            <image wx:if="{{checked == item.id}}" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/gouhao@2x.png" alt=""></image>
+            <text wx:if="{{checked != item.id}}" >设为默认</text>
+            <text wx:if="{{checked == item.id}}" >默认地址</text>
+          </view>
+          <image data-id="{{ item.id }}" @tap.stop="deleteAddress" class="addressItem-remove" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/shanchu@2x.png"></image>
+          <image data-id="{{ item.id }}" data-phone="{{ item.phone }}" data-name="{{ item.name }}" data-address="{{ item.address }}" data-city="{{ item.city }}" data-province="{{ item.province }}" data-region="{{ item.region }}" @tap.stop="bianJiAddress" class="addressItem-edit" src="http://p6nvs9qd1.bkt.clouddn.com/images/home/bianji@2x.png"></image>
+        </view>
+      </view>
+    </block>
+    <view @tap.stop="ToAndAddress" class="addAddress">
+      <text>添加新地址</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  import * as mineMethods from '@/util/mine'
+  @connect({
+  })
+
+  export default class userAndress extends wepy.page {
+    config = {
+      navigationBarTitleText: '选择地址'
+    }
+    components = {
+    }
+
+    data = {
+      addressArray: [],
+      checked: 0,
+      checkedLock: true,
+      addressF: 'new',
+      mode: ''
+    }
+
+    computed = {
+    }
+
+    methods = {
+      checkedAddress: function (event) {
+        var _this = this
+        var _thisId = event.currentTarget.dataset.id
+        if (this.checkedLock) {
+          this.checkedLock = false
+          api.addressDefault({id: event.currentTarget.dataset.id}).then(function (body) {
+            _this.checkedLock = true
+            if (body.result.code === '1') {
+              _this.checked = _thisId
+              _this.$apply()
+            }
+          })
+        }
+      },
+      ToAndAddress: function () {
+        wepy.navigateTo({
+          url: `addAndress?addressFrom=${this.addressF}`
+        })
+      },
+      bianJiAddress: function (event) {
+        wepy.navigateTo({
+          url: `addAndress?addressFrom=${event.currentTarget.dataset.id}&phone=${event.currentTarget.dataset.phone}&name=${event.currentTarget.dataset.name}&address=${event.currentTarget.dataset.address}&city=${event.currentTarget.dataset.city}&province=${event.currentTarget.dataset.province}&region=${event.currentTarget.dataset.region}`
+        })
+      },
+      deleteAddress: function (event) {
+//          这里需要提示 DOING
+        var _thisId = event.currentTarget.dataset.id
+        var _this = this
+        wepy.showModal({
+          title: '提示：',
+          content: '确认删除地址嘛？'
+        }).then((res) => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            api.removeAddress({id: _thisId}).then(function ({body}) {
+              mineMethods.alertToast('已删除地址', 'none')
+              if (_this.mode === 'choose') {
+                return
+              }
+              setTimeout(function () {
+                wepy.navigateTo({
+                  url: 'userContent'
+                })
+              }, 1000)
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        })
+      },
+      chooseAddress (address) {
+        if (this.mode !== 'choose') {
+          return
+        }
+        wepy.globalData.chooseAddress = address
+        wepy.navigateBack({
+          delta: 1
+        })
+        this.mode = ''
+      }
+    }
+
+    events = {
+    }
+
+    onLoad (options) {
+      const { mode } = options
+      this.mode = mode
+    }
+
+    onShow() {
+      api.getAddressList().then(({body}) => {
+        var _this = this
+        this.addressArray = body.address
+        for (var i = 0; i < body.address.length; i++) {
+          if (body.address[i].default) {
+            this.checked = body.address[i].id
+          }
+        }
+        if (this.addressArray.length > 0 && this.checked === 0) {
+          api.addressDefault({id: _this.addressArray[0].id}).then(function (body) {
+            if (body.result.code === '1') {
+              _this.checked = _this.addressArray[0].id
+              _this.$apply()
+            }
+          })
+        }
+        this.$apply()
+      })
+    }
+  }
+</script>

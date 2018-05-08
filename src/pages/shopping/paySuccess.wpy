@@ -1,0 +1,105 @@
+<style lang="scss">
+  .container > view {
+    width: 100%;
+  }
+  .pay-box {
+    background-color: rgba(255, 152, 88, 0.1);
+    height: 355rpx;
+  }
+  .pay-title {
+    margin-top: 60rpx;
+    text-align: center;
+    color: #999;
+    margin-bottom: 10rpx;
+    font-size: 26rpx;
+  }
+  .pay-money {
+    font-size: 60rpx;
+    color: #FF6000;
+    text-align: center;
+  }
+  .pay-button {
+    margin-top: 40rpx;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 130rpx;
+  }
+  .btn-m {
+    width: 205rpx;
+    height: 68rpx;
+    border: 1px solid #E4E4E5;
+    font-size: 28rpx;
+    color: #666;
+    text-align: center;
+    line-height: 68rpx;
+    border-radius: 10rpx;
+  }
+
+  .btn-m-c {
+    background-color: #FF6000;
+    color: #fff;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="pay-box">
+      <view class="pay-title">
+        支付金额
+      </view>
+      <view class="pay-money">
+        ￥{{orderValue/100}}
+      </view>
+      <view class="pay-button">
+        <view class="btn-m" @tap="toOrderInfo">
+          查看订单
+        </view>
+        <view class="btn-m btn-m-c" @tap="toHome">
+          回到首页
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  @connect({
+  })
+
+  export default class PaySuccess extends wepy.page {
+    config = {
+      navigationBarTitleText: '支付成功'
+    }
+    components = {
+    }
+
+    data = {
+      orderValue: 0
+    }
+
+    computed = {
+    }
+
+    methods = {
+      toHome () {
+        console.log('toHometoHometoHometoHome')
+        this.$switch('../index')
+      },
+      toOrderInfo () {
+        wepy.redirectTo({
+          url: `/pages/mine/orderDetail?orderno=${this.orderNo}`
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      const { orderNo, orderValue } = options
+      this.orderValue = orderValue
+      this.orderNo = orderNo
+    }
+  }
+</script>

@@ -1,0 +1,283 @@
+<style lang="scss">
+  .addressItem {
+    width: 680rpx;
+    height: 196rpx;
+    border-radius: 6rpx;
+    padding: 0 15rpx;
+  }
+  .addressItem-top {
+    width: 680rpx;
+    height: 156rpx;
+    padding-top: 30rpx;
+    .addressItem-top-title {
+      width: 650rpx;
+      height: 42rpx;
+      font-size: 30rpx;
+      margin: 0 auto;
+      color: #333;
+      .addressItem-top-title-name {
+        float: left;
+      }
+      .addressItem-top-title-phone {
+        float: right;
+      }
+    }
+    .addressItem-top-content {
+      width: 650rpx;
+      height: 76rpx;
+      margin: 0 auto;
+      color: #333;
+      font-size: 26rpx;
+      line-height: 32rpx;
+      margin-top: 20rpx;
+      .addressItem-top-content-title {
+        width: 140rpx;
+        float: left;
+      }
+      .addressItem-top-content-content {
+        width: 510rpx;
+        float: left;
+      }
+    }
+  }
+  .orderBox {
+    width: 710rpx;
+    box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+    background-color: #fcfcfc;
+    border-radius: 6rpx;
+    overflow: visible;
+    .orderBox-item-top {
+      width: 680rpx;
+      height: 33rpx;
+      padding-bottom: 12rpx;
+      border-bottom: 1rpx solid rgba(30,40,48,0.1);
+      font-size: 0;
+      text {
+        font-size: 24rpx;
+        color: #666;
+        margin-left: 15rpx;
+        padding-right: 22rpx;
+        background-repeat: no-repeat;
+        background-size: 12rpx auto;
+        background-position: right center;
+      }
+    }
+    .orderBox-item-content {
+      width: 640rpx;
+      height: 140rpx;
+      padding-top: 40rpx;
+      padding-bottom: 25rpx;
+      padding-left: 25rpx;
+      padding-right: 15rpx;
+      image {
+        width: 160rpx;
+        height: 140rpx;
+        float: left;
+      }
+      .orderBox-item-content-content {
+        width: 453rpx;
+        height: 140rpx;
+        float: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .orderBox-item-content-content-title {
+          display: block;
+          font-size: 26rpx;
+          line-height: 37rpx;
+          color: #333;
+        }
+        .orderBox-item-content-content-taste {
+          display: block;
+          font-size: 22rpx;
+          line-height: 30rpx;
+          color: #8D9092;
+        }
+        .orderBox-item-content-content-num {
+          width: 453rpx;
+          height: 40rpx;
+        }
+      }
+    }
+  }
+  .orderBox-bottom {
+    width: 670rpx;
+    height: 44px;
+    padding: 15rpx;
+    padding-right: 25rpx;
+    padding-top: 15rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    text {
+      font-size: 26rpx;
+      color: #333;
+      padding: 4rpx 20rpx;
+      line-height: 37rpx;
+      border: 1rpx solid rgba(43,49,55,0.27);
+      border-radius: 4rpx;
+      margin-left: 30rpx;
+    }
+    text.z-no {
+      border: 0;
+      color: #8D9092;
+      background-color: #E1E6EA;
+    }
+    text.z-on {
+      border: 0;
+      color: #FF6000;
+    }
+  }
+  .orderDetail-result {
+    width: 690rpx;
+    border-bottom: 1rpx solid rgba(43,49,55,0.27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40rpx;
+    .orderDetail-result-item1 {
+      width: 670rpx;
+      height: 37rpx;
+      padding-bottom: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text {
+        font-size: 28rpx;
+        color: #666;
+        line-height: 37rpx;
+      }
+    }
+    .orderDetail-result-item2 {
+      width: 670rpx;
+      height: 37rpx;
+      padding-bottom: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text {
+        font-size: 28rpx;
+        color: #666;
+        line-height: 37rpx;
+      }
+    }
+  }
+  .orderDetail-session {
+    width: 670rpx;
+    height: 80rpx;
+    background-color: #fafafa;
+    padding: 20rpx 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    text {
+      font-size: 22rpx;
+      color: #999;
+      line-height: 30rpx;
+    }
+  }
+</style>
+<template>
+  <view class="container" style="padding-bottom: 100rpx;">
+    <view class="addressItem">
+      <view class="addressItem-top">
+        <view class="addressItem-top-title">
+          <text class="addressItem-top-title-name">{{'收货人：' + refundDetailData.addrInfo.addrName}}</text>
+          <text class="addressItem-top-title-phone">{{refundDetailData.addrInfo.addrPhone}}</text>
+        </view>
+        <view class="addressItem-top-content">
+          <text class="addressItem-top-content-title">{{'收货地址：'}}</text>
+          <text class="addressItem-top-content-content">{{ refundDetailData.addrInfo.province + refundDetailData.addrInfo.city + refundDetailData.addrInfo.region + refundDetailData.addrInfo.address }}</text>
+        </view>
+      </view>
+    </view>
+    <view class="orderBox">
+      <view class="orderBox-item" style="width: 680rpx; padding: 15rpx;">
+        <view class="orderBox-item-top">
+          <text style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/you_xiao@2x.png')">{{ refundDetailData.shopName }}</text>
+        </view>
+        <view class="orderBox-item-content">
+          <image src="{{ refundDetailData.proPreUrl }}"></image>
+          <view class="orderBox-item-content-content">
+            <view style="display: block;">
+              <text class="orderBox-item-content-content-title">{{ refundDetailData.productName }}</text>
+              <text class="orderBox-item-content-content-taste">#{{ refundDetailData.proTaste }}</text>
+            </view>
+            <view class="orderBox-item-content-content-num" >
+              <text style="font-size: 24rpx; color: #1E2830; float: left;">￥{{ refundDetailData.value/100 }}</text>
+              <text style="font-size: 24rpx; color: #8D9092; float: right;">x{{ refundDetailData.num }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="orderDetail-result">
+      <view class="orderDetail-result-item1">
+        <text>退款金额</text>
+        <text>￥{{ refundDetailData.refundValue/100 }}</text>
+      </view>
+      <view class="orderDetail-result-item2">
+        <text>退款时间</text>
+        <text>{{ refundDetailData.refundTime }}</text>
+      </view>
+    </view>
+    <view class="orderBox-bottom">
+      <text wx:if="{{ refundDetailData.proRefundStatus == 1 }}" class="z-on">退款申请中</text>
+      <text wx:if="{{ refundDetailData.proRefundStatus == 2 }}" class="z-on">退款成功</text>
+      <text wx:if="{{ refundDetailData.proRefundStatus == 3 }}" class="z-on">退款失败</text>
+    </view>
+    <view class="orderDetail-session">
+      <text>下单时间：{{ refundDetailData.orderCreateTime }}</text>
+      <text>订单号：{{ refundDetailData.orderNo }}</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  @connect({
+  })
+
+  export default class orderRefundDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '订单详情'
+    }
+    components = {
+    }
+    data = {
+      orderNo: 0,
+      refundDetailData: null
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      this.orderNo = options.orderno
+      var _this = this
+      api.refundList().then((body) => {
+        var refundData = body.body.refundList
+        for (var i = 0; i < refundData.length; i++) {
+          if (refundData[i].orderNo === _this.orderNo) {
+            _this.refundDetailData = refundData[i]
+          }
+        }
+        console.log(_this.refundDetailData)
+        _this.$apply()
+      })
+    }
+  }
+</script>

@@ -1,0 +1,203 @@
+<style lang="scss">
+  .addressItem {
+    width: 680rpx;
+    height: 196rpx;
+    border-radius: 6rpx;
+    padding: 0 15rpx;
+  }
+  .addressItem-top {
+    width: 680rpx;
+    height: 156rpx;
+    padding-top: 30rpx;
+    .addressItem-top-title {
+      width: 650rpx;
+      height: 42rpx;
+      font-size: 30rpx;
+      margin: 0 auto;
+      color: #333;
+      .addressItem-top-title-name {
+        float: left;
+      }
+      .addressItem-top-title-phone {
+        float: right;
+      }
+    }
+    .addressItem-top-content {
+      width: 650rpx;
+      height: 76rpx;
+      margin: 0 auto;
+      color: #333;
+      font-size: 26rpx;
+      line-height: 32rpx;
+      margin-top: 20rpx;
+      .addressItem-top-content-title {
+        width: 140rpx;
+        float: left;
+      }
+      .addressItem-top-content-content {
+        width: 510rpx;
+        float: left;
+      }
+    }
+  }
+  .logisticsContent {
+    width: 710rpx;
+    height: 266rpx;
+    margin: 0 auto;
+    box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+    background-color: #fcfcfc;
+  }
+  .logisticsContent-top {
+    width: 650rpx;
+    height: 80rpx;
+    padding: 0 15rpx;
+    margin: 0 auto;
+    border-bottom: 1rpx solid rgba(30,40,48,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 0;
+      .logisticsContent-top-box {
+        height: 60rpx;
+        padding-top: 20rpx;
+        font-size: 0;
+          image {
+            display: block;
+            width: 43rpx;
+            height: 43rpx;
+            float: left;
+          }
+          text {
+            display: block;
+            font-size: 30rpx;
+            color: #333;
+            line-height: 43rpx;
+            margin-left: 33rpx;
+            float: left;
+          }
+      }
+    .logisticsContent-top-status {
+      font-size: 30rpx;
+      color: #FF6000;
+      line-height: 43rpx;
+    }
+  }
+  .logisticsContent-bottom {
+    width: 710rpx;
+    height: 185rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+      .logisticsContent-bottom-item {
+        width: 710rpx;
+        height: 38rpx;
+        font-size: 0;
+          text {
+            font-size: 26rpx;
+            color: #666;
+            line-height: 38rpx;
+            margin-left: 110rpx;
+          }
+          text.z-on {
+            font-size: 24rpx;
+            color: #FF6000;
+            line-height: 38rpx;
+            display: inline-block;
+            width: 83rpx;
+            height: 38rpx;
+            text-align: center;
+            background: rgba(255,96,0,0.08);
+            border-radius: 4rpx;
+          }
+      }
+  }
+</style>
+<template>
+  <view class="container" style="padding-bottom: 100rpx;">
+    <view wx:if="{{ clipboardData !== null }}" class="addressItem">
+      <view class="addressItem-top">
+        <view class="addressItem-top-title">
+          <text class="addressItem-top-title-name">{{'收货人：' + clipboardData.address.name}}</text>
+          <text class="addressItem-top-title-phone">{{clipboardData.address.phone}}</text>
+        </view>
+        <view class="addressItem-top-content">
+          <text class="addressItem-top-content-title">{{'收货地址：'}}</text>
+          <text class="addressItem-top-content-content">{{clipboardData.address.address}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="logisticsContent">
+      <view class="logisticsContent-top">
+        <view class="logisticsContent-top-box">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/transport_sf.png"></image>
+          <text>顺丰速运</text>
+        </view>
+        <text wx:if="{{ clipboardData.transStatus === 1 }}" class="logisticsContent-top-status">已发货</text>
+        <text wx:if="{{ clipboardData.transStatus === 2 }}" class="logisticsContent-top-status">已签收</text>
+        <text wx:if="{{ clipboardData.transStatus === 3 }}" class="logisticsContent-top-status">已结束</text>
+      </view>
+      <view class="logisticsContent-bottom">
+        <view @tap.stop="copyDanhao" data-id="123456789" style="margin-bottom: 30rpx;" class="logisticsContent-bottom-item">
+          <text>快递单号：<text style="margin-left: 0;"  wx:if="{{clipboardData.transportNo}}" >{{ clipboardData.transportNo }} <text class="z-on" style="margin-left: 30rpx;">复制</text></text></text>
+        </view>
+        <view @tap.stop="callPhone" class="logisticsContent-bottom-item">
+          <text>官方电话：95338<text class="z-on" style="margin-left: 30rpx;">拨打</text></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as mineMethods from '@/util/mine.js'
+  import * as Api from '@/server/api.js'
+  @connect({
+  })
+
+  export default class orderLogistics extends wepy.page {
+    config = {
+      navigationBarTitleText: '物流详情'
+    }
+    components = {
+    }
+    data = {
+      clipboardData: null
+    }
+
+    computed = {
+    }
+
+    methods = {
+      copyDanhao: function (event) {
+        var dataNum = event.currentTarget.dataset.id
+        wepy.setClipboardData({
+          data: dataNum
+        }).then(() => {
+          mineMethods.alertToast('复制成功', 'none')
+        })
+      },
+      callPhone: function () {
+        wepy.makePhoneCall({
+          phoneNumber: '95338'
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      var _this = this
+      Api.getOrderDetail({orderNo: options.orderno}).then((result) => {
+        console.log(result)
+        _this.clipboardData = result.body
+        _this.$apply()
+        console.log(_this.clipboardData)
+      })
+    }
+  }
+</script>

@@ -1,0 +1,51 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+      <repeat for="{{shops}}" key="index" index="index" item="shopItem">
+        <shop :shopItem.sync="shopItem" />
+      </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Shop from '@/view/shop'
+  import * as api from '@/server/api'
+  @connect({
+  })
+
+  export default class Mine extends wepy.page {
+    config = {
+      navigationBarTitleText: '全部商家'
+    }
+    components = {
+      shop: Shop
+    }
+
+    data = {
+      shops: []
+    }
+
+    computed = {
+    }
+    methods = {
+    }
+    events = {
+    }
+
+    onLoad() {
+      api.getShopList({
+      }).then(({body}) => {
+        this.shops = body.shop
+        this.$apply()
+      })
+    }
+  }
+</script>

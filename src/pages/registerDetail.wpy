@@ -1,0 +1,55 @@
+<style lang="scss">
+	.container {
+    > view {
+      width: 100%;
+    }
+    > image {
+      width: 100%;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/1.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/2.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/3.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/4.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/5.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/6.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/7.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/8.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/9.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/10.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/11.png" />
+		<image mode="widthFix" src="http://p77y58u6a.bkt.clouddn.com/image/file/zcxy/01/12.png" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  @connect({
+  })
+
+  export default class RegisterDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '注册协议'
+    }
+    components = {
+    }
+
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+    events = {
+    }
+
+    onLoad(options) {
+    }
+  }
+</script>

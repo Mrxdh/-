@@ -1,0 +1,584 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+  }
+
+  .product-swiper {
+    height: 420rpx;
+    width: 100%;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .product-banner {
+
+  }
+
+  .product-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    margin-top: 30rpx;
+    font-size: 36rpx;
+    > button {
+      position: relative;
+      display: inline-block;
+      padding: 0;
+      line-height: 0;
+      margin: 0;
+      border-radius: 0;
+      border: none;
+      background-color: initial;
+      &::after {
+        border: none;
+      }
+    }
+    image {
+      width: 36rpx;
+      height: 46rpx;
+    }
+  }
+
+  .product-price {
+    font-size: 70rpx;
+    color: #FF6000;
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    font-weight: bold;
+    .product-price-s {
+      font-size: 24rpx;
+      font-weight:initial;
+    }
+
+    > view {
+      display: inline-block;
+    }
+  }
+
+  .product-shop {
+    padding: 33rpx 40rpx;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(162, 162, 162, 0.2);
+    border-bottom: 1px solid rgba(162, 162, 162, 0.2);
+    font-size: 24rpx;
+    color: #8D9092;  
+    image {
+      width: 66rpx;
+      height: 44rpx;
+      vertical-align: middle;
+    }
+    >view {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .product-shop-count {
+    margin: 0 40rpx;
+    font-size: 36rpx;
+    color: #333;
+  }
+  
+  .product-taste-other,
+  .product-taste {
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    > view {
+      font-size: 26rpx;
+      color: #8D9092;
+      margin-right: 10rpx;
+    }
+  }
+
+  .product-taste-other {
+    background-color: rgb(243, 242, 242);
+  }
+
+  .product-taste > view {
+    display: inline-block;
+  }
+  
+  .product-taste-text {
+    display: flex;
+    justify-content: space-between;
+    color: #1e2830;
+    padding: 30rpx 0;
+
+    > view {
+      font-size: 24rpx;
+      &:last-child {
+        height: 40rpx;
+        width: 40rpx;
+      }
+    }
+    image {
+      width: 18rpx;
+      height: 13rpx;
+      margin-top: 10rpx;
+    }
+  }
+
+  .product-taste-content {
+      width: 100%;
+  }
+
+  .product-comment-title {
+    font-size: 24rpx;
+    color: #8d9092;
+    padding: 40rpx;
+    border-bottom: 1px solid rgba(162, 162, 162, 0.2);
+    border-top: 1px solid rgba(162, 162, 162, 0.2);
+  }
+
+  .product-comment {
+    .review-item {
+      padding: 30rpx 40rpx;
+    }
+  }
+
+  .product-comment-all {
+    text-align: center;
+    font-size: 24rpx;
+    color: #818f99;
+    padding: 40rpx;
+    view {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    image {
+      vertical-align: middle;
+      margin-left: 10rpx;
+      width: 9rpx;
+      height: 12rpx;
+    }
+  }
+
+  .product-introduce {
+    font-size: 24rpx;
+    color: #8d9092;
+    padding: 40rpx;
+    box-sizing: border-box;
+  }
+
+  .product-introduce-images {
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    margin-bottom: 120rpx;
+    width: 100%;
+    image {
+      width: 100%;
+    }
+  }
+
+  .shop {
+    padding-left: 40rpx!important;
+    padding-right: 40rpx!important;
+  }
+
+  .product-shopping {
+    background-color: #FFF;
+    height: 120rpx;
+    padding: 22rpx 40rpx;
+    position: fixed;
+    bottom: 0;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(162, 162, 162, 0.2);
+  }
+
+  .product-shopping-text {
+    display: inline-block;
+    text-align: center;
+    margin-left: 40rpx;
+    view {
+      font-size: 24rpx;
+      color: #1E2830;
+      padding-left: 6rpx;
+    }
+    image {
+      width: 44rpx;
+      height: 36.4rpx;
+    }
+    vertical-align: middle;
+  }
+  .product-shopping-join {
+    width: 220rpx;
+    height: 80rpx;
+    background-color: #1E2830;
+    line-height: 80rpx;
+    text-align: center;
+    color: #FFF;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+    vertical-align: middle;
+    margin-right: 20rpx;
+    margin-left: 90rpx;
+    display: inline-block;
+  }
+  .product-shopping-buy {
+    display: inline-block;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 32rpx;
+    border-radius: 10rpx;
+    color: #FFF;
+    width: 220rpx;
+    vertical-align: middle;
+    height: 80rpx;
+    background-color: #FF5400;
+  }
+  .product-taste-box {
+  }
+
+  .product-taste-item {
+    background-color: #fff;
+    padding: 17rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    font-size: 24rpx;
+    width: 30%;
+    height: 108rpx;
+    display: inline-block;
+    margin-right: 4%;
+    margin-bottom: 30rpx;
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+
+  .product-taste-it {
+    margin-bottom: 10rpx;
+  }
+
+  .product-taste-ib {
+    font-size: 26rpx;
+    color: #FF6000;
+    > view {
+      display: inline-block;
+    }
+  }
+  .disabled {
+    background: #818f99;
+    color: #fff;
+  }
+</style>
+<template>
+  <view class="container">
+    <swiper
+    class="product-swiper"
+    indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" 
+    interval="{{interval}}" 
+    duration="{{duration}}"
+    indicator-dots="{{true}}"
+    >
+      <block wx:for="{{detail.info_url}}">
+        <swiper-item>
+          <image mode="aspectFill" src="{{item}}" class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+        <view class="product-title">
+            <view>
+                {{detail.name}}
+            </view>
+            <button open-type="share" ><image src="http://p5it0fwv0.bkt.clouddn.com/images/home/share@2x.png" /></button>
+        </view>
+        <view class="product-taste">
+            <view>
+                #
+            </view>
+            <view>
+                {{detail.taste}}
+            </view>
+        </view>
+        <view class="product-price">
+            <view class="product-price-s">
+                ￥
+            </view>
+            <view>
+                {{detail.value ? detail.value / 100 : 0 }}
+            </view>
+        </view>
+        <view class="product-shop">
+            <view>
+                购买数量：
+            </view>
+            <image class="product-shop-j" src="{{ detail.productCount <= 1 ? 'http://p5it0fwv0.bkt.clouddn.com/images/home/jian1@2x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/home/jian@2x.png' }}" @tap="subtractProduct" />
+            <view class="product-shop-count">{{ detail.productCount }}</view>
+            <image class="product-shop-ji" src="http://p5it0fwv0.bkt.clouddn.com/images/home/jia1@2x.png" @tap="addProductCount" />
+        </view>
+        <view class="product-taste-other">
+            <view class="product-taste-text">
+                <view>
+                    查看添加其他口味
+                </view>
+                <view @tap="tapTasteState">
+                    <image src="{{ tasteState ? 'http://p5it0fwv0.bkt.clouddn.com/images/home/xia@2x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/home/shouqi@2x.png' }}" />
+                </view>
+            </view>
+            <view class="product-taste-content" hidden="{{tasteState}}" >
+              <repeat for="{{taste}}" key="index" index="index" item="item">
+                <view class="product-taste-item" @tap="addProductTaste({{item}})" @tap="toProduct({{item}})">
+                  <view class="product-taste-it">
+                      {{ item.name }}
+                  </view>
+                  <view class="product-taste-ib">
+                      <view>￥</view>
+                      <view>{{ item.value / 100 }}</view>
+                  </view>
+                </view>
+              </repeat>
+            </view>
+        </view>
+        <view class="product-comment">
+            <view class="product-comment-title">
+                宝贝评价{{ detail.comment_size ? '('+detail.comment_size+')' : '' }}
+            </view>
+            <repeat for="{{comments}}" key="index" index="index" item="item">
+              <review :reviewObj.sync="item" />
+            </repeat>
+            <view class="product-comment-all">
+                <view @tap="toAllComment">全部评论</view>
+                <image  src="http://p5it0fwv0.bkt.clouddn.com/images/home/jiantou@2x.png" />
+            </view>
+        </view>
+        <view class="product-shop-box">
+          <shop :shopItem.sync="shopItem" />
+        </view>
+        <view class="product-introduce">
+          商品介绍:
+        </view>
+        <view class="product-introduce-images">
+          <repeat for="{{topic}}" key="index" index="index" item="item">
+            <image mode="widthFix" src="{{item.pic_url}}" />
+          </repeat>
+        </view>
+        <view class="product-shopping">
+          <view class="product-shopping-text" @tap="toHome">
+              <image src="http://p5it0fwv0.bkt.clouddn.com/images/home/shop@2x.png" />
+              <view>购物车</view>
+          </view>
+          <view class="product-shopping-join" @tap="pushProduct">
+            加入购物车
+          </view>
+          <view class="product-shopping-buy" @tap="buyProduct">
+            立即购买
+          </view>
+        </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Review from '@/view/review'
+  import Shop from '@/view/shop'
+  import * as api from '@/server/api'
+  import * as util from '@/util/util'
+  import _ from 'lodash'
+  
+  @connect({
+  })
+
+  export default class Product extends wepy.page {
+    config = {
+      navigationBarTitleText: '小小红龙虾'
+    }
+    components = {
+      review: Review,
+      shop: Shop
+    }
+
+    data = {
+      topic: [
+        'http://img02.tooopen.comhttp://p5it0fwv0.bkt.clouddn.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'http://img06.tooopen.comhttp://p5it0fwv0.bkt.clouddn.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'http://img06.tooopen.comhttp://p5it0fwv0.bkt.clouddn.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ],
+      detail: {
+        productCount: 1
+      },
+      shopItem: {},
+      indicatorDots: false,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000,
+      taste: [],
+      comments: [],
+      tasteState: true,
+      disabled: false
+    }
+
+    computed = {
+    }
+
+    methods = {
+      addProductTaste (taste) {
+        console.log(taste)
+      },
+      toProduct (item) {
+        wepy.redirectTo({
+          url: `/pages/product?productId=${item.pro_id}`
+        })
+      },
+      buyProduct () {
+        if (!this.detail.pro_id) {
+          return
+        }
+        if (this.disabled === true) {
+          return
+        }
+        this.disabled = true
+        let products = [this.detail]
+
+        const params = products.map(json => {
+          return {
+            proId: json.pro_id,
+            num: json.productCount
+          }
+        })
+        api.createOrder({
+          orderJson: JSON.stringify({
+            proids: params
+          })
+        }).then(({ body, result }) => {
+          wepy.showToast({
+            title: result.msg,
+            duration: 2000
+          })
+
+          if (result.code !== '1') {
+            this.disabled = false
+            return
+          }
+          wepy.globalData.orderSuccessData = body
+          wepy.navigateTo({
+            url: '/pages/shopping/reservationInfo'
+          })
+          this.disabled = false
+        }, (error) => {
+          const { result } = error
+          const code = result && result.code
+          if (code === '-6') {
+            wepy.globalData.orderParams = params
+            wepy.globalData.orderProducts = products
+            wepy.navigateTo({
+              url: `./mine/addAndress?addressFrom=new&type=createOrder`
+            })
+            this.disabled = false
+            return
+          }
+          setTimeout(() => {
+            this.disabled = false
+          }, 2000)
+        })
+      },
+      addProductCount () {
+        if (this.detail.productCount >= this.detail.num) {
+          return
+        }
+        this.detail.productCount++
+        this.$apply()
+      },
+      subtractProduct () {
+        if (this.detail.productCount <= 1) {
+          return
+        }
+        this.detail.productCount--
+        this.$apply()
+      },
+      toAllComment () {
+        wepy.navigateTo({
+          url: `reviews?productId=${this.productId}`
+        })
+      },
+      tapTasteState () {
+        this.tasteState = !this.tasteState
+        this.$apply()
+      },
+      pushProduct () {
+        if (!this.detail.pro_id) {
+          return
+        }
+        util.pushShoppingOfProduct({
+          ..._.cloneDeep(this.detail),
+          shop_name: this.shopItem.name
+        })
+        console.log(JSON.stringify({
+          ..._.cloneDeep(this.detail),
+          shop_name: this.shopItem.name
+        }))
+        // this.detail.productCount = 1
+        wepy.showToast({
+          title: '添加成功！',
+          icon: 'success',
+          duration: 2000
+        })
+        this.$apply()
+      },
+      toHome () {
+        this.$switch('./shopping/shopping')
+      }
+    }
+
+    events = {
+    }
+
+    onShareAppMessage (res) {
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target)
+      }
+      return {
+        title: `${this.detail.name}`,
+        path: `/pages/product?productId=${this.detail.pro_id}`,
+        success: function(res) {
+          // 转发成功
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      }
+    }
+
+    onShow () {
+      // if (this.isLoad) {
+      //   this.onLoad(this.options)
+      // }
+    }
+
+    onLoad(options) {
+      const { productId } = options
+      this.options = options
+      this.productId = productId
+      wepy.setNavigationBarTitle({
+        title: '商品详情'
+      })
+      wepy.showLoading({
+        title: '加载中'
+      })
+      api.getProductDetail({
+        proId: productId
+      }).then(({body}) => {
+        const { topic, detail, shop, comments, taste } = body
+        detail.productCount = 1
+        this.topic = topic
+        this.detail = detail
+        this.shopItem = shop
+        this.comments = comments
+        this.taste = taste
+        this.$apply()
+        this.isLoad = true
+        wepy.hideLoading()
+      }, () => {
+        wepy.hideLoading()
+      })
+    }
+  }
+</script>

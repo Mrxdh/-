@@ -1,0 +1,347 @@
+<style lang="scss">
+  .addressItem {
+    width: 680rpx;
+    height: 196rpx;
+    border-radius: 6rpx;
+    padding: 0 15rpx;
+  }
+  .addressItem-top {
+    width: 680rpx;
+    height: 156rpx;
+    padding-top: 30rpx;
+    .addressItem-top-title {
+      width: 650rpx;
+      height: 42rpx;
+      font-size: 30rpx;
+      margin: 0 auto;
+      color: #333;
+      .addressItem-top-title-name {
+        float: left;
+      }
+      .addressItem-top-title-phone {
+        float: right;
+      }
+    }
+    .addressItem-top-content {
+      width: 650rpx;
+      height: 76rpx;
+      margin: 0 auto;
+      color: #333;
+      font-size: 26rpx;
+      line-height: 32rpx;
+      margin-top: 20rpx;
+      .addressItem-top-content-title {
+        width: 140rpx;
+        float: left;
+      }
+      .addressItem-top-content-content {
+        width: 510rpx;
+        float: left;
+      }
+    }
+  }
+  .orderBox {
+    width: 710rpx;
+    box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+    background-color: #fcfcfc;
+    border-radius: 6rpx;
+    overflow: visible;
+    .orderBox-item-top {
+      width: 680rpx;
+      height: 33rpx;
+      padding-bottom: 12rpx;
+      border-bottom: 1rpx solid rgba(30,40,48,0.1);
+      font-size: 0;
+      text {
+        font-size: 24rpx;
+        color: #666;
+        margin-left: 15rpx;
+        padding-right: 22rpx;
+        background-repeat: no-repeat;
+        background-size: 12rpx auto;
+        background-position: right center;
+      }
+    }
+    .orderBox-item-content {
+      width: 640rpx;
+      height: 140rpx;
+      padding-top: 40rpx;
+      padding-bottom: 25rpx;
+      padding-left: 25rpx;
+      padding-right: 15rpx;
+      image {
+        width: 160rpx;
+        height: 140rpx;
+        float: left;
+      }
+      .orderBox-item-content-content {
+        width: 453rpx;
+        height: 140rpx;
+        float: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .orderBox-item-content-content-title {
+          display: block;
+          font-size: 26rpx;
+          line-height: 37rpx;
+          color: #333;
+        }
+        .orderBox-item-content-content-taste {
+          display: block;
+          font-size: 22rpx;
+          line-height: 30rpx;
+          color: #8D9092;
+        }
+        .orderBox-item-content-content-num {
+          width: 453rpx;
+          height: 40rpx;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+  .refundBtn {
+    font-size: 26rpx;
+    color: #333;
+    padding: 4rpx 20rpx;
+    line-height: 37rpx;
+    border: 1rpx solid rgba(43,49,55,0.27);
+    border-radius: 4rpx;
+    margin-left: 30rpx;
+  }
+  .refundBtn.z-no {
+    border: 0;
+    color: #8D9092;
+    background-color: #E1E6EA;
+  }
+
+  .orderDetail-result {
+    width: 690rpx;
+    border-bottom: 1rpx solid rgba(43,49,55,0.27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40rpx;
+    .orderDetail-result-item1 {
+      width: 670rpx;
+      height: 37rpx;
+      padding-bottom: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+       text {
+         font-size: 26rpx;
+         color: #666;
+         line-height: 37rpx;
+       }
+    }
+    .orderDetail-result-item2 {
+      width: 670rpx;
+      height: 37rpx;
+      padding-bottom: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+        text {
+          font-size: 26rpx;
+          color: #666;
+          line-height: 37rpx;
+        }
+    }
+    .orderDetail-result-item3 {
+      width: 670rpx;
+      height: 42rpx;
+      padding-bottom: 30rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+        text {
+          font-size: 30rpx;
+          color: #333;
+          line-height: 42rpx;
+        }
+    }
+  }
+  .orderDetail-session {
+    width: 670rpx;
+    height: 80rpx;
+    background-color: #fafafa;
+    padding: 20rpx 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20rpx;
+      text {
+        font-size: 22rpx;
+        color: #999;
+        line-height: 30rpx;
+      }
+  }
+  .orderBottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 98rpx;
+    background-color: #fff;
+    box-shadow: 0 -2px 4px 0 rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+      text {
+        font-size: 26rpx;
+        color: #333;
+        padding: 4rpx 20rpx;
+        line-height: 37rpx;
+        border: 1rpx solid rgba(43,49,55,0.27);
+        border-radius: 4rpx;
+        margin-right: 30rpx;
+      }
+      text.z-on {
+        border: 0;
+        color: #FF6000;
+      }
+      text.z-no {
+        border: 0;
+        color: #8D9092;
+        background-color: #E1E6EA;
+      }
+  }
+</style>
+<template>
+  <view class="container" style="padding-bottom: 100rpx;">
+    <view class="addressItem">
+      <view class="addressItem-top">
+        <view class="addressItem-top-title">
+          <text class="addressItem-top-title-name">收货人：{{ detailData.address.name }}</text>
+          <text class="addressItem-top-title-phone">{{ detailData.address.phone }}</text>
+        </view>
+        <view class="addressItem-top-content">
+          <text class="addressItem-top-content-title">{{'收货地址：'}}</text>
+          <text class="addressItem-top-content-content">{{ detailData.address.address }}</text>
+        </view>
+      </view>
+    </view>
+    <view class="orderBox">
+      <view wx:for="{{ detailData.orderInfo }}" wx:for-item="itemBox" class="orderBox-item" style="width: 680rpx; padding: 15rpx;">
+        <view class="orderBox-item-top">
+          <text style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/you_xiao@2x.png')">{{ itemBox.shopName }}</text>
+        </view>
+        <view wx:for="{{ itemBox.proInfo }}" class="orderBox-item-content">
+          <image src="{{ item.pre_pic_url }}"></image>
+          <view class="orderBox-item-content-content">
+            <view style="display: block;">
+              <text class="orderBox-item-content-content-title">{{ item.proName }}</text>
+              <text class="orderBox-item-content-content-taste">#{{ item.taste }}</text>
+            </view>
+            <view class="orderBox-item-content-content-num" >
+              <text style="font-size: 24rpx; color: #1E2830;">￥{{ item.allValue/100 }}<text style="font-size: 24rpx; color: #8D9092; margin-left: 20rpx;">x{{ item.buyNum }}</text></text>
+              <text class="refundBtn" wx:if="{{ item.proRefundStatus == 0 }}" data-osid="{{ item.osid }}" data-orderNo="{{detailData.orderNo}}" @tap.stop="refundOreder" >申请退款</text>
+              <text class="refundBtn z-on" wx:if="{{ item.proRefundStatus == 1 }}">退款申请中</text>
+              <text class="refundBtn" wx:if="{{ item.proRefundStatus == 2 }}">退款成功</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="orderDetail-result">
+      <view class="orderDetail-result-item1">
+        <text>商品总价</text>
+        <text>￥{{ detailData.productValue/100 }}</text>
+      </view>
+      <view class="orderDetail-result-item2">
+        <text>快递费用</text>
+        <text>￥{{ detailData.transValue/100 }}</text>
+      </view>
+      <view class="orderDetail-result-item3">
+        <text>订单总额</text>
+        <text>￥{{ detailData.orderValue/100 }}</text>
+      </view>
+    </view>
+    <view class="orderDetail-session">
+      <text>下单时间：{{ detailData.createTime }}</text>
+      <text>订单号：{{ detailData.orderNo }}</text>
+    </view>
+    <view class="orderBottom">
+      <text wx:if="{{ detailData.orderStatus == 0 }}" class="z-on">交易成功</text>
+      <text wx:if="{{ detailData.transStatus != 0 && detailData.transStatus != 4 }}" data-orderNo="{{detailData.orderNo}}" @tap.stop="ToTrans">查看物流</text>
+      <text wx:if="{{ detailData.transStatus == 0 }}" @tap.stop="alertFaHuo">提醒发货</text>
+      <text wx:if="{{ detailData.commentStatus == 0 && detailData.orderStatus != 0 }}" data-orderno="{{ detailData.orderNo }}" @tap.stop="ToComment">评价</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api.js'
+  import * as mineMethods from '@/util/mine.js'
+  @connect({
+  })
+
+  export default class orderDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '订单详情'
+    }
+    components = {
+    }
+    data = {
+      detailData: null
+    }
+
+    computed = {
+    }
+
+    methods = {
+      ToComment: function (event) {
+        var _thisOrderNo = event.currentTarget.dataset.orderno
+        wepy.navigateTo({
+          url: `judgeDetail?orderno=${_thisOrderNo}`
+        })
+      },
+      ToTrans: function (event) {
+        var _orderNo = event.currentTarget.dataset.orderno
+        wepy.navigateTo({
+          url: 'orderLogistics?orderno=' + _orderNo
+        })
+      },
+      alertFaHuo: function () {
+        mineMethods.alertToast('已提醒发货', 'none')
+      },
+      refundOreder: function (event) {
+        api.refundOrder({orderNo: event.currentTarget.dataset.orderno, osid: event.currentTarget.dataset.osid}).then((body) => {
+          if (body.result.code === 1) {
+            mineMethods.alertToast(body.result.msg, 'success')
+          } else {
+            mineMethods.alertToast(body.result.msg, 'none')
+          }
+          setTimeout(function () {
+            wepy.navigateBack()
+          }, 1000)
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      var _this = this
+      api.getOrderDetail({orderNo: options.orderno}).then((body) => {
+        console.log(body)
+        _this.detailData = body.body
+        _this.$apply()
+      })
+    }
+  }
+</script>

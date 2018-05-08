@@ -1,0 +1,189 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+  }
+  .shop {
+    padding: 30rpx 0 40rpx 30rpx;
+    box-shadow: 1px 1px 10px 0 rgba(162, 162, 162, 0.2);
+  }
+  .shops-item {
+    margin-bottom: 40rpx;
+    image {
+      vertical-align: middle;
+      width: 120rpx;
+      height: 120rpx;
+      margin-right: 31rpx;
+    }
+    > view {
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .title {
+      font-size: 32rpx;
+    }
+    .description {
+      font-size: 26rpx;
+      color: #666;
+    }
+  }
+
+  .home-product {
+    margin-top: 43rpx;
+    height: 240rpx;
+    .home-product-item {
+      margin: 0 40rpx 30rpx 40rpx;
+    }
+  }
+
+  .shops-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 92rpx;
+    > view {
+      padding: 0 30rpx;
+      text-align: center;
+      view {
+        font-size: 36rpx;
+        color: #4a4a4a;
+        &:last-child {
+          color: #999;
+          font-size: 22rpx;
+        }
+      }
+    }
+    image {
+      width: 150rpx;
+      height: 60rpx;
+      margin-top: 15rpx;
+    }
+  }
+
+  .home-product-header {
+    margin-top: 34rpx;
+    display: flex;
+    justify-content:space-between;
+    .product-header-il {
+      margin-left: 40rpx;
+        width: 4rpx;
+        height: 30rpx;
+        display: inline-block;
+        background: #B6BEC4;
+        vertical-align: middle;
+        margin-right: 6rpx;
+    }
+    .product-header-ir {
+        width: 30rpx;
+        height: 30rpx;
+        margin-top: 6rpx;
+        margin-right: 40rpx;
+    }
+    view {
+      font-size: 26rpx;
+        color: #2B3137;
+        vertical-align: middle;
+        display: inline-block;
+    }
+  }
+
+</style>
+<template>
+  <view class="container">
+      <view class="shop" @tap="toHome">
+        <view class="shops-item">
+            <image src="http://pic.cdhdky.com/download/20170522_182416587.jpg" />
+            <view>
+                <view class="title">
+                    {{ shopObj.name }}
+                </view>
+                <view class="description">
+                    {{ shopObj.info }}
+                </view>
+            </view>
+        </view>
+        <view class="shops-count">
+            <view class="shops-count-l">
+                <view>
+                    {{ shopObj.pro_num }}
+                </view>
+                <view>
+                    全部商品
+                </view>
+            </view>
+            <view class="shop-count-m">
+                <view>
+                  {{ shopObj.sales }}
+                </view>
+                <view>
+                        总销量
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="home-product-header">
+      <view>
+        <view class="product-header-il">
+        </view>
+        <view>随心的吃货</view>
+      </view>
+    </view>
+    <view class="home-product">
+      <repeat for="{{shopObj.products}}" key="index" index="index" item="item">
+        <product :product.sync="item" />
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Product from '@/view/product'
+  import * as api from '@/server/api'
+  @connect({
+  })
+
+  export default class Shop extends wepy.page {
+    config = {
+      navigationBarTitleText: '店铺'
+    }
+    components = {
+      product: Product
+    }
+
+    data = {
+      shopObj: {}
+    }
+
+    computed = {
+    }
+
+    methods = {
+      toHome () {
+        this.$navigate({
+          url: '/pages/index'
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      const { shopId } = options
+      api.getShopInfo({
+        shopId
+      }).then(({body}) => {
+        body.products = body.products.map(product => {
+          product.sid = body.shop_id
+          product.shop_name = body.name
+          return product
+        })
+        this.shopObj = body
+        console.log(body)
+        this.$apply()
+      })
+    }
+  }
+</script>

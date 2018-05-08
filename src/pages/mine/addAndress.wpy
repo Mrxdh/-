@@ -1,0 +1,296 @@
+<style lang="scss">
+  .container {
+    width: 750rpx;
+    .addAddress-item {
+      width: 710rpx;
+      height: 110rpx;
+      border-bottom: 1rpx solid #eee;
+      margin-left: 40rpx;
+        .addAddress-item-title {
+          width: 190rpx;
+          height: 110rpx;
+          float: left;
+          text-align: left;
+           text {
+             font-size: 30rpx;
+             line-height: 110rpx;
+             color: #333;
+           }
+        }
+        .addAddress-item-content {
+          width: 520rpx;
+          height: 110rpx;
+          float: left;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          input {
+            font-size: 28rpx;
+            width: 470rpx;
+            height: 110rpx;
+            color: #333;
+            placeholder-style: #999;
+          }
+          picker {
+            font-size: 28rpx;
+            width: 470rpx;
+            height: 110rpx;
+            color: #333;
+            position: relative;
+              .picker {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                line-height: 110rpx;
+              }
+            .picker.z-on {
+              color: #999999;
+            }
+          }
+          image {
+            display: block;
+            width: 16rpx;
+            height: 26rpx;
+            margin-right: 40rpx;
+          }
+         }
+        .addAddress-item-content.z-on {
+          height: 132rpx;
+          padding-top: 24rpx;
+            textarea {
+              width: 500rpx;
+              height: 92rpx;
+              font-size: 28rpx;
+              line-height: 46rpx;
+              color: #333;
+              placeholder-style: #999;
+            }
+        }
+    }
+    .addAddress-item.z-on {
+      height: 173rpx;
+    }
+    .addAddress-save {
+      display: block;
+      width: 670rpx;
+      height: 94rpx;
+      background: #1E2830;
+      border: 2px solid rgba(5,5,5,0.08);
+      border-radius: 10px;
+      font-size: 36rpx;
+      color: #fff;
+      line-height: 94rpx;
+      text-align: center;
+      margin: 0 auto;
+      margin-top: 80rpx;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="addAddress-item">
+      <view class="addAddress-item-title">
+        <text>收货人：</text>
+      </view>
+      <view class="addAddress-item-content">
+        <input type="text" bindinput="bindinputName" placeholder="姓名" value="{{ addressContent.name }}">
+      </view>
+    </view>
+    <view class="addAddress-item">
+      <view class="addAddress-item-title">
+        <text>联系电话：</text>
+      </view>
+      <view class="addAddress-item-content">
+        <input type="number" maxlength="11" bindinput="bindinputPhone" placeholder="手机号码" value="{{ addressContent.phone }}">
+      </view>
+    </view>
+    <view class="addAddress-item">
+      <view class="addAddress-item-title">
+        <text>选择地区：</text>
+      </view>
+      <view class="addAddress-item-content">
+        <!--<input type="text" placeholder="请选择省／市／区">-->
+        <picker mode="region" bindchange="bindRegionChange" value="{{addressContent.region}}">
+          <view wx:if="addressContent.region != undefined" class="picker {{addressfrom === 'new'? 'z-on' : ''}}">
+            {{addressContent.region[0]}}{{addressContent.region[1]}}{{addressContent.region[2]}}
+          </view>
+        </picker>
+        <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/you_xiao@2x.png"></image>
+      </view>
+    </view>
+    <view class="addAddress-item z-on">
+      <view class="addAddress-item-title">
+        <text style="line-height: 134rpx;" >详细地址：</text>
+      </view>
+      <view  class="addAddress-item-content z-on">
+        <textarea bindinput="bindDetailAddress" placeholder="还请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元室等" value="{{ addressContent.address }}"></textarea>
+      </view>
+    </view>
+    <text style="font-size: 24rpx; color: #999; line-height: 33rpx; margin-top: 30rpx; display: block; width: 710rpx; margin-left: 40rpx;">*暂不支持港、澳、台地区，敬请谅解。</text>
+    <text @tap="saveAddress" class="addAddress-save">保存</text>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  import * as mineMethods from '@/util/mine'
+  import * as util from '@/util/util'
+  @connect({
+  })
+
+  export default class addAndress extends wepy.page {
+    config = {
+      navigationBarTitleText: '添加收货地址'
+    }
+    components = {
+    }
+
+    data = {
+      addressfrom: '',
+      type: null,
+      addressContent: {
+        region: ['请选择省/', '市/', '区'],
+        name: '',
+        phone: '',
+        address: ''
+      }
+    }
+
+    computed = {
+    }
+
+    methods = {
+      saveAddress: function () {
+        console.log(this.addressContent.phone)
+        if (this.addressContent.name === '') {
+          mineMethods.alertToast('姓名不能为空', 'none')
+        } else if (!mineMethods.isPoneAvailable(this.addressContent.phone)) {
+          mineMethods.alertToast('请输入正确的电话号码', 'none')
+        } else if (this.addressContent.address === '') {
+          mineMethods.alertToast('详细地址不能为空', 'none')
+        } else if (this.addressContent.region[0] === '请选择省/') {
+          mineMethods.alertToast('请选择省市区', 'none')
+        } else {
+          if (this.addressfrom === 'new') {
+            if (this.temp === true) {
+              return
+            }
+            this.temp = true
+            api.addMineAddress({
+              name: this.addressContent.name,
+              phone: this.addressContent.phone,
+              province: this.addressContent.region[0],
+              city: this.addressContent.region[1],
+              region: this.addressContent.region[2],
+              address: this.addressContent.address
+            }).then((body) => {
+              if (this.type === 'createOrder') {
+                api.getAddressList().then(({body}) => {
+                  const addressList = body.address
+                  const address = addressList.find(json => json.name === this.addressContent.name)
+                  api.addressDefault({id: address.id}).then((body) => {
+                    this.temp = false
+                    this.createOrder()
+                  })
+                })
+                return
+              }
+              this.temp = false
+              console.log(body)
+              if (body.result.code === 1) {
+                mineMethods.alertToast(body.result.msg, 'success')
+              } else {
+                mineMethods.alertToast(body.result.msg, 'none')
+              }
+              setTimeout(function () {
+                wepy.navigateBack()
+              }, 1000)
+            }, () => {
+              this.temp = false
+            })
+          } else {
+            api.changeMineAddress({
+              name: this.addressContent.name,
+              phone: this.addressContent.phone,
+              province: this.addressContent.region[0],
+              city: this.addressContent.region[1],
+              region: this.addressContent.region[2],
+              address: this.addressContent.address,
+              id: this.addressfrom
+            }).then(function (body) {
+              if (body.result.code === 1) {
+                mineMethods.alertToast(body.result.msg, 'success')
+              } else {
+                mineMethods.alertToast(body.result.msg, 'none')
+              }
+              setTimeout(function () {
+                wepy.navigateBack()
+              }, 1000)
+            })
+          }
+        }
+      },
+      bindRegionChange: function (event) {
+        this.addressContent.region = event.detail.value
+      },
+      bindinputName: function (event) {
+        this.addressContent.name = event.detail.value
+      },
+      bindinputPhone: function (event) {
+        this.addressContent.phone = event.detail.value
+      },
+      bindDetailAddress: function (event) {
+        this.addressContent.address = event.detail.value
+      }
+    }
+
+    events = {
+    }
+
+    createOrder () {
+      const params = wepy.globalData.orderParams
+      const products = wepy.globalData.orderProducts
+      api.createOrder({
+        orderJson: JSON.stringify({
+          proids: params
+        })
+      }).then(({ body, result }) => {
+        wepy.showToast({
+          title: result.msg,
+          duration: 2000
+        })
+        util.removeCheckedProductChecked(products)
+        wepy.globalData.orderSuccessData = body
+        wepy.redirectTo({
+          url: '../shopping/reservationInfo'
+        })
+      })
+    }
+
+    onLoad(options) {
+      console.log(options)
+
+      if (options.addressFrom !== 'new') {
+        this.addressfrom = options.addressFrom
+        let newArr = []
+        newArr.push(options.province)
+        newArr.push(options.city)
+        newArr.push(options.region)
+        this.addressContent.region = newArr
+        this.addressContent.name = options.name
+        this.addressContent.phone = options.phone
+        this.addressContent.address = options.address
+        this.$apply()
+      } else {
+        this.addressfrom = 'new'
+      }
+
+      this.type = options.type
+    }
+  }
+</script>

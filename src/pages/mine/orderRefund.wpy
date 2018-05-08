@@ -1,0 +1,163 @@
+<style lang="scss">
+  .container {
+    width: 750rpx;
+    padding-top: 20rpx;
+      .scrollBox {
+        position: fixed;
+        left: 0rpx;
+        right: 0rpx;
+        top: 0rpx;
+        bottom: 0;
+      }
+      .refundList {
+        width: 710rpx;
+        box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+        background-color: #fcfcfc;
+        margin: 0 auto;
+          .refundList-top {
+            width: 680rpx;
+            height: 45rpx;
+            padding-top: 36rpx;
+            font-size: 0;
+            margin: 0 auto;
+            border-bottom: 1rpx solid rgba(30,40,48,0.1);
+             text {
+               font-size: 24rpx;
+               color: #666;
+               line-height: 33rpx;
+               margin-left: 15rpx;
+             }
+          }
+        .refundList-content {
+          width: 650rpx;
+          height: 100rpx;
+          margin: 0 auto;
+          padding: 30rpx;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+           image {
+             display: block;
+             width: 100rpx;
+             height: 100rpx;
+           }
+          .refundList-content-item1 {
+            font-size: 26rpx;
+            color: #333;
+            line-height: 37rpx;
+            width: 213rpx;
+            display: -webkit-box;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+          }
+          .refundList-content-item2 {
+            font-size: 24rpx;
+            color: #999;
+            line-height: 33rpx;
+            margin-left: 20rpx;
+          }
+          .refundList-content-item3 {
+            font-size: 26rpx;
+            color: #FF6000;
+            line-height: 37rpx;
+          }
+        }
+      }
+  }
+
+</style>
+<template>
+  <view class="container">
+    <scroll-view scroll-y class="scrollBox scrollJudge">
+      <view wx:if="{{ refundData.length > 0 }}" wx:for="{{ refundData }}" wx:for-item="itemBox" data-orderno="{{itemBox.orderNo}}" @tap="ToRefundDetail" class="refundList">
+        <view class="refundList-top">
+          <text>订单号：{{ itemBox.orderNo }}</text>
+        </view>
+        <view  style="width: 100%" >
+          <view class="refundList-content">
+            <image src="{{ itemBox.proPreUrl }}"></image>
+            <text class="refundList-content-item1">{{ itemBox.productName }}</text>
+            <!--<text class="refundList-content-item2">共{{ itemBox.num }}件商品</text>-->
+            <text wx:if="{{ itemBox.proRefundStatus == 1 }}" class="refundList-content-item3">退款申请中</text>
+            <text wx:if="{{ itemBox.proRefundStatus == 2 }}" class="refundList-content-item3">退款成功</text>
+            <text wx:if="{{ itemBox.proRefundStatus == 3 }}" class="refundList-content-item3">退款失败</text>
+          </view>
+          </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+
+  @connect({
+  })
+
+  export default class orderRefund extends wepy.page {
+    config = {
+      navigationBarTitleText: '退款订单'
+    }
+    components = {
+    }
+
+    data = {
+      refundData: [],
+      refundLock: true,
+      refundNum: 1
+    }
+
+    computed = {
+    }
+
+    methods = {
+      ToRefundDetail: function (event) {
+        var _orderno = event.currentTarget.dataset.orderno
+        wepy.navigateTo({
+          url: 'orderRefundDetail?orderno=' + _orderno
+        })
+      },
+      refundScrollBottom: function () {
+        var _this = this
+        if (this.refundLock === 'lock') {
+          return
+        }
+        if (_this.refundLock) {
+          _this.refundLock = false
+          _this.refundNum = _this.refundNum + 1
+          api.getAllOrder({type: 4, currentPage: _this.judgeNum}).then((body) => {
+            _this.refundData = _this.refundData.concat(body.body.refundList)
+            console.log(_this.refundData)
+            _this.refundLock = true
+            if (_this.refundNum >= body.body.pageInfo.info.tatol) {
+              this.refundLock = 'lock'
+            }
+            _this.$apply()
+          })
+        }
+        console.log('refund滑动到底部啦')
+      }
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      var _this = this
+      api.refundList().then((body) => {
+        console.log(body)
+        _this.refundData = body.body.refundList
+//        if (body.body.pageInfo.info.pageNo >= body.body.pageInfo.info.tatol) {
+//          this.refundLock = 'lock'
+//        }
+        _this.$apply()
+      })
+    }
+  }
+</script>

@@ -1,0 +1,110 @@
+<style lang="scss">
+	.shop {
+    padding: 30rpx 0 40rpx 30rpx;
+    box-shadow: 1px 1px 10px 0 rgba(162, 162, 162, 0.2);
+    background-color: #FCFCFC;
+  }
+  .shops-item {
+    margin-bottom: 40rpx;
+    image {
+      vertical-align: middle;
+      width: 120rpx;
+      height: 120rpx;	
+      margin-right: 31rpx;
+    }
+    > view {
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .title {
+      font-size: 32rpx;
+    }
+    .description {
+      font-size: 26rpx;
+      color: #666;
+    }
+  }
+
+  .shops-count {
+    display: flex;
+    justify-content: space-between;
+    .shops-count-l {
+
+    }
+    > view {
+      padding: 0 30rpx;
+      text-align: center;
+      view {
+        font-size: 36rpx;
+        color: #4a4a4a;
+        &:last-child {
+          color: #999;
+          font-size: 22rpx;
+        }
+      }
+    }
+    image {
+      width: 150rpx;
+      height: 60rpx;
+      margin-top: 15rpx;
+    }
+  }
+</style>
+<template>
+  <view class="shop">
+    <view class="shops-item">
+      <image mode="aspectFill" src="{{ shopItem.head_url }}" />
+      <view>
+        <view class="title">
+          {{ shopItem.name }}
+        </view>
+        <view class="description">
+          {{ shopItem.info }}
+        </view>
+      </view>
+    </view>
+    <view class="shops-count">
+      <view class="shops-count-l">
+        <view>
+          {{ shopItem.pro_num }}
+        </view>
+        <view>
+          全部商品
+        </view>
+      </view>
+      <view class="shop-count-m">
+        <view>
+            {{ shopItem.sales }}
+        </view>
+        <view>
+            总销量
+        </view>
+      </view>
+      <view @tap="toShop">
+        <image src="http://p5it0fwv0.bkt.clouddn.com/images/home/guangguang@2x.png" />
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Shop extends wepy.component {
+    props = {
+      shopItem: {
+        type: Object,
+        default: {}
+      }
+    }
+
+    components = {
+    }
+    methods = {
+      toShop () {
+        this.$parent.$navigate({
+          url: `/pages/shop?shopId=${this.shopItem.shop_id}`
+        })
+      }
+    }
+  }
+</script>

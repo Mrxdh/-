@@ -1,0 +1,59 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+    > image {
+      width: 100%;
+    }
+  }
+
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{urls}}" key="index" index="index" item="item">
+      <image mode="widthFix" src="{{item}}" />
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  
+  @connect({
+  })
+
+  export default class Reviews extends wepy.page {
+    config = {
+      navigationBarTitleText: '详情'
+    }
+    components = {
+    }
+
+    data = {
+      urls: [],
+      title: ''
+    }
+
+    computed = {
+    }
+
+    methods = {
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      this.banner = wepy.globalData.bannerInfo
+      this.title = this.banner.title
+      this.urls = this.banner.secUrls
+      wepy.setNavigationBarTitle({
+        title: this.title || '详情'
+      })
+
+      console.log(this.banner)
+    }
+  }
+</script>

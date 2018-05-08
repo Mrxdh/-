@@ -1,0 +1,99 @@
+<style lang="scss">
+	.home-product-item {
+    padding: 6rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 1px 1px 10px 0 rgba(162, 162, 162, 0.15);
+    border-radius: 10rpx;
+    display: flex;
+    > image {
+      width: 262rpx;
+      height: 228rpx;
+    }
+    .home-product-ib {
+      flex: 1;
+      padding: 14rpx 14rpx 14rpx 15rpx;
+      font-size: 28rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      image {
+        width: 44rpx;
+        height: 44rpx;
+      }
+    }
+    .home-product-price {
+      display: flex;
+      justify-content: space-between;
+      color: #FF6000;
+      font-size: 36rpx;
+      .unit {
+        font-size: 24rpx;
+        display: inline;
+      }
+      .price {
+        font-size: 36rpx;
+        display: inline;
+      }
+    }
+
+    .home-product-type {
+      color: #8D9092;
+    }
+  }
+</style>
+<template>
+  <view class="home-product-item" @tap="toProduct">
+			<image mode="aspectFill" src="{{ product.showpic_url || 'http://pic.cdhdky.com/download/20170522_182410503.jpg' }}" />
+			<view class="home-product-ib">
+					<view>
+					<view>
+							{{ product.name }}
+					</view>
+					<view class="home-product-type">
+							# {{ product.taste }}
+					</view>
+					</view>
+					<view class="home-product-price">
+            <view>
+                <view class="unit">￥</view>
+                <view class="price">{{ product.value/100 }}</view>
+            </view>
+            <image @tap.stop="pushProduct" src="http://p5it0fwv0.bkt.clouddn.com/images/home/gouwuche@2x.png" />
+					</view>
+			</view>
+	</view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import * as util from '@/util/util'
+  export default class Product extends wepy.component {
+    props = {
+      product: {
+        type: Object,
+        default: {}
+      }
+    }
+
+    components = {
+    }
+    methods = {
+      toProduct () {
+        wepy.navigateTo({
+          url: `/pages/product?productId=${this.product.pro_id}`
+        })
+      },
+      pushProduct (e) {
+        util.pushShoppingOfProduct(this.product)
+        wepy.showToast({
+          title: '添加成功！',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    }
+    watch = {
+    }
+    onLoad () {
+    }
+  }
+</script>

@@ -1,0 +1,320 @@
+<style lang="scss">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+  .userBox {
+    width: 710rpx;
+    height: 140rpx;
+    margin: 0 auto;
+    background-color: #FF8900;
+    border-radius: 6rpx;
+    padding: 40rpx 0;
+
+      .userImg {
+        float: left;
+        display: block;
+        border: 4rpx solid #fff;
+        width: 132rpx;
+        height: 132rpx;
+        border-radius: 50%;
+        margin-left: 90rpx;
+      }
+      .userContent {
+        width: 440rpx;
+        height: 140rpx;
+        float: left;
+        margin-left: 40rpx;
+        display: flex;
+        justify-content: center;
+        align-items: left;
+        flex-direction: column;
+          .userLoadType {
+            font-size: 32rpx;
+            color: #fff;
+            display: inline-block;
+            height: 32rpx;
+            padding: 2rpx 6rpx;
+            border: 1rpx solid #fff;
+            line-height: 32rpx;
+            border-radius: 4rpx;
+            display: none;
+          }
+          .userName {
+            display: block;
+            width: 400rpx;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 42rpx;
+            color: #fff;
+          }
+          .userMore {
+            display: block;
+            font-size: 28rpx;
+            color: #f9f9f9;
+            text-align: left;
+            padding-right: 25rpx;
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 14rpx 20rpx;
+          }
+      }
+  }
+  .userOrder {
+    width: 690rpx;
+    height: 114rpx;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1rpx solid rgba(30,40,48,0.1);
+    .mineOrder {
+      font-size: 28rpx;
+      color: #000;
+      margin-left: 10rpx;
+    }
+    .allOrder {
+      padding-right: 24rpx;
+      font-size: 22rpx;
+      line-height: 22rpx;
+      color: #666;
+      margin-right: 24rpx;
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: 10rpx 14rpx;
+    }
+  }
+  .orderContent {
+    width: 690rpx;
+    height: 178rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+      text {
+        width: 72rpx;
+        font-size: 24rpx;
+        text-align: center;
+        color: #666;
+        padding-top: 61rpx;
+        background-size: 50rpx auto;
+        background-repeat: no-repeat;
+        background-position: center top;
+        position: relative;
+          text {
+            position: absolute;
+            right: -8rpx;
+            top: -8rpx;
+            display: block;
+            width: 36rpx;
+            height: 36rpx;
+            background-color: #FF6300;
+            font-size: 24rpx;
+            line-height: 36rpx;
+            text-align: center;
+            border-radius: 50%;
+            color: #fff;
+            padding: 0;
+
+          }
+      }
+      .contentWaiting {
+
+      }
+      .contentAppraise {
+
+      }
+      .contentRefund {
+
+      }
+  }
+  .orderContent.z-on {
+    border-bottom: 1rpx solid rgba(30,40,48,0.1);
+  }
+  .orderTuijian {
+    width: 710rpx;
+    height: 260rpx;
+    background-color: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20rpx 0;
+      .orderTuijian-title {
+        font-size: 26rpx;
+        color: #999;
+        line-height: 37rpx;
+      }
+      .orderTuijian-content {
+        font-size: 72rpx;
+        line-height: 100rpx;
+        color: #ff8900;
+        font-weight: bold;
+      }
+      .orderTuijian-share {
+        width: 128rpx;
+        height: 50rpx;
+        font-size: 24rpx;
+        line-height: 50rpx;
+        border-radius: 25rpx;
+        color: #fff;
+        background-color: #ff8900;
+        text-align: center;
+      }
+  }
+  .contactUs {
+    width: 232rpx;
+    height: 71rpx;
+    border-radius: 100rpx;
+    border:1rpx solid #979797;
+    margin-top: 50rpx;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+      image {
+        width: 31rpx;
+        height: 31rpx;
+        margin-right: 17rpx;
+      }
+      text {
+        font-size: 30rpx;
+        color: #333;
+      }
+  }
+</style>
+<template>
+  <view class="container">
+    <view @tap="userContent" class="userBox">
+      <image class="userImg" src="{{ mineHeadurl }}"></image>
+      <view class="userContent">
+        <text class="userLoadType">手机号登录</text>
+        <text class="userName">{{ mineName }}</text>
+        <text class="userMore" style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/jiantou_bai@2x.png')">个人信息</text>
+      </view>
+    </view>
+    <view class="userOrder" @tap="ToUserOrder">
+      <text class="mineOrder">我的订单</text>
+      <text class="allOrder" style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/jiantou@2x.png')">全部订单</text>
+    </view>
+    <view class="orderContent z-on">
+      <text class="content contentWaiting" @tap.stop="ToConsignmentOrder" style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/daifahuo@2x.png')">待发货<text wx:if="{{ mineWaitpro != null && mineWaitpro != 0 }}">{{ mineWaitpro }}</text></text>
+      <text class="content contentAppraise" @tap.stop="ToCommentOrder" style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/daipingjia@2x.png')">待评价<text wx:if="{{ mineWaitcomment != null && mineWaitcomment != 0 }}">{{ mineWaitcomment }}</text></text>
+      <text class="content contentRefund" @tap="ToOrderRefund" style="background-image: url('http://p6nvs9qd1.bkt.clouddn.com/images/home/tuikuan@2x.png')">退款<text wx:if="{{ mineRefund != null && mineRefund != 0 }}">{{ mineRefund }}</text></text>
+    </view>
+    <view style="display: none;" class="orderTuijian">
+      <text class="orderTuijian-title">我的推荐码</text>
+      <text class="orderTuijian-content">5912</text>
+      <text class="orderTuijian-share">分享出去</text>
+    </view>
+    <view class="contactUs">
+      <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/lianxiwomen@2x.png"></image>
+      <text @tap.stop="ToContactOur">联系我们</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  @connect({
+  })
+
+  export default class Mine extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的'
+    }
+    components = {
+    }
+
+    data = {
+      mineName: '',
+      mineHeadurl: '',
+      mineRefund: null,
+      mineWaitcomment: null,
+      mineWaitpro: null
+    }
+
+    computed = {
+    }
+
+    methods = {
+      ToConsignmentOrder: function () {
+        wepy.navigateTo({
+          url: 'consignmentOrder'
+        })
+      },
+      ToCommentOrder: function () {
+        wepy.navigateTo({
+          url: 'commentOrder'
+        })
+      },
+      userContent: function () {
+        wepy.navigateTo({
+          url: 'userContent'
+        })
+      },
+      ToUserOrder: function () {
+        wepy.navigateTo({
+          url: 'userOrder'
+        })
+      },
+      ToOrderRefund: function () {
+        wepy.navigateTo({
+          url: 'orderRefund'
+        })
+      },
+      ToContactOur: function () {
+        wepy.navigateTo({
+          url: 'contactOur'
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onShow () {
+      if (this.isLoad) {
+        this.getMine()
+      }
+    }
+    getMine () {
+      api.getMine().then(({body}) => {
+        this.mineName = body.info.name
+        this.mineHeadurl = body.info.head_url
+        this.mineRefund = body.info.refund
+        this.mineWaitcomment = body.info.wait_comment
+        this.mineWaitpro = body.info.wait_pro
+        this.isLoad = true
+        this.$apply()
+        wepy.hideLoading()
+      }, () => {
+        this.isLoad = true
+        wepy.hideLoading()
+      })
+    }
+
+    onLoad() {
+      wepy.showLoading({
+        title: '加载中'
+      })
+      this.getMine()
+    }
+  }
+</script>

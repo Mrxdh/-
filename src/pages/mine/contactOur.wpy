@@ -1,0 +1,194 @@
+<style lang="scss">
+  .container {
+    width: 750rpx;
+  }
+  .contactOur-top {
+    width: 670rpx;
+    height: 110rpx;
+    padding-right: 40rpx;
+    margin-left: 40rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1rpx solid #eee;
+      .contactOur-top-title {
+        font-size: 30rpx;
+        color: #333;
+        line-height: 42rpx;
+      }
+      .contactOur-top-content {
+        font-size: 28rpx;
+        color: #999;
+        line-height: 40rpx;
+      }
+      .contactOur-top-content2 {
+        height: 110rpx;
+        width: 300rpx;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-end;
+        position: relative;
+          text {
+            color: #FF8900;
+            font-size: 28rpx;
+            line-height: 40rpx;
+          }
+          image {
+            display: inline-block;
+            width: 31rpx;
+            height: 30rpx;
+            margin-right: 10rpx;
+          }
+      }
+  }
+  .contactOur-contact {
+    width: 670rpx;
+    height: 464rpx;
+    padding-right: 40rpx;
+    margin-left: 40rpx;
+    padding-top: 50rpx;
+    padding-bottom: 70rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1rpx solid #eee;
+      .contactOur-contact-item {
+        width: 312rpx;
+        height: 464rpx;
+        .contactOur-contact-item-content {
+          width: 312rpx;
+          height: 380rpx;
+          box-shadow: -4px -4px 10px 0 rgba(162,162,162,0.05), 4px 4px 10px 0 rgba(162,162,162,0.05);
+          background-color: #fcfcfc;
+          border-radius: 6rpx;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+            image {
+              display: block;
+              width: 312rpx;
+              height: 380rpx;
+              margin-bottom: 10rpx;
+            }
+        }
+        .contactOur-contact-item-save {
+          display: block;
+          width: 144rpx;
+          height: 44rpx;
+          background: rgba(255,96,0,0.08);
+          border-radius: 4px;
+          font-size: 26rpx;
+          color: #FF6000;
+          line-height: 44rpx;
+          text-align: center;
+          margin: 0 auto;
+          margin-top: 40rpx;
+        }
+      }
+  }
+  .contactOur-bottom {
+    width: 674rpx;
+    margin: 0 auto;
+    font-size: 0;
+    text {
+      width: 674rpx;
+      font-size: 22rpx;
+      color: #8D9092;
+      line-height: 32rpx;
+    }
+    text.z-on {
+      color: #FF8900;
+      width: auto;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="contactOur-top">
+      <text class="contactOur-top-title">官方邮箱</text>
+      <text class="contactOur-top-content">kefu@xuyi-crayfish.com</text>
+    </view>
+    <view class="contactOur-top">
+      <text class="contactOur-top-title">在线客服</text>
+      <view class="contactOur-top-content2">
+        <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/kefu@2x.png"></image>
+        <text>联系客服</text>
+        <button style="display: block; width: 300rpx; height: 110rpx; position: absolute; right: 0; top: 0; opacity: 0; " class="contactOur-top-title" open-type="contact" /></button>
+      </view>
+    </view>
+    <view class="contactOur-contact">
+      <view class="contactOur-contact-item">
+        <view class="contactOur-contact-item-content">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/erweima_qq1.png"></image>
+          <!--<text style="font-size: 22rpx; color: #333; line-height: 30rpx;">官方QQ</text>-->
+          <!--<text style="font-size: 20rpx; color: #999; line-height: 28rpx;">ID:2142107864</text>-->
+        </view>
+        <text data-msg="http://p6nvs9qd1.bkt.clouddn.com/images/home/erweima_qq1.png" @tap.stop="saveErweima" class="contactOur-contact-item-save">保存</text>
+      </view>
+      <view class="contactOur-contact-item">
+        <view class="contactOur-contact-item-content">
+          <image src="http://p6nvs9qd1.bkt.clouddn.com/images/home/erweima_gzh1.png"></image>
+          <!--<text style="font-size: 22rpx; color: #333; line-height: 30rpx;">官方公众号</text>-->
+          <!--<text style="font-size: 20rpx; color: #999; line-height: 28rpx;">微信内搜索"对味儿笔记"</text>-->
+        </view>
+        <text data-msg="http://p6nvs9qd1.bkt.clouddn.com/images/home/erweima_gzh1.png" @tap.stop="saveErweima" class="contactOur-contact-item-save">保存</text>
+      </view>
+    </view>
+    <view class="contactOur-bottom">
+      <text style="display: block; line-height: 48rpx;">小贴士：</text>
+      <text  @tap.stop="callPhone" >商务合作、企业订单等，可直接通过电话(<text class="z-on"  >13915169157</text>）、邮箱、QQ与我们取得联系，我们会在第一时间内为您提供最贴心的服务～</text>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as mineMethods from '@/util/mine.js'
+  @connect({
+  })
+
+  export default class contactOur extends wepy.page {
+    config = {
+      navigationBarTitleText: '联系我们'
+    }
+    components = {
+    }
+    data = {
+      startNum: 2
+    }
+
+    computed = {
+    }
+
+    methods = {
+      callPhone: function () {
+        wepy.makePhoneCall({
+          phoneNumber: '13915169157'
+        })
+      },
+      saveErweima: function (event) {
+        var imgUrl = event.currentTarget.dataset.msg
+        wepy.downloadFile({
+          url: imgUrl
+        }).then((res) => {
+          wepy.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath
+          }).then((result) => {
+            mineMethods.alertToast('保存成功', 'none')
+          })
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onLoad() {
+    }
+  }
+</script>

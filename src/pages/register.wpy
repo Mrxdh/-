@@ -1,0 +1,196 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+    padding: 0 30rpx;
+  }
+
+  .btn-c {
+    margin-top: 80rpx;
+    width: 220rpx!important;
+    font-size: 32rpx;
+    line-height: 80rpx;
+    text-align: center;
+    height: 80rpx;
+    background-color: #1E2830;
+    border-radius: 40rpx;
+    color: #fff;
+  }
+
+  .server-deal {
+    font-size: 22rpx;
+    color: #4a4a4a;
+    text-align: center;
+    margin-top: 50rpx;
+    > view {
+      color: #FF8900;
+      display: inline-block;
+    }
+  }
+
+  .input-hint {
+    color: #666;
+    font-size: 24rpx;
+  }
+
+  .input-btn-r {
+    height: 44rpx;
+    display: flex;
+    padding-bottom: 30rpx;
+    border-bottom: 1px solid #EEE;
+    > input {
+      height: 44rpx;
+      min-height: initial;
+      flex: 1;
+    }
+    .disabled {
+      border: 1px solid #E1E6EA;
+      color: #BEC2C4;
+    }
+  }
+
+  .v-btn-sm {
+    width: 120rpx;
+    height: 40rpx;
+    font-size: 26rpx;
+    color: #FF8900;
+    border-radius: 4rpx;
+    border: 1px solid #FF8900;
+    text-align: center;
+  }
+
+</style>
+<template>
+  <view class="container">
+      <view class="input-hint" style="margin-bottom:30rpx;">
+        短信验证码已发送至 {{phone}}
+      </view>
+      <view class="input-btn-r">
+        <input type="number" bindinput="changeCode" />
+        <view class="v-btn-sm {{ isEnd ? '' : 'disabled' }}" @tap="getCode" >{{ isEnd ? '获取' : count }}</view>
+      </view>
+      <button class="btn-c btn-next" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="toRegister">
+        确定
+      </button>
+      <view class="server-deal">
+          同意<view @tap="toDetail">《服务协议》</view>
+      </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  import md5 from '@/util/md5'
+  import * as util from '@/util/util'
+  @connect({
+  })
+
+  export default class Register extends wepy.page {
+    config = {
+      navigationBarTitleText: '注册'
+    }
+    components = {
+    }
+
+    data = {
+      isEnd: true,
+      count: 60,
+      phone: '',
+      code: ''
+    }
+
+    computed = {
+    }
+
+    methods = {
+      changeCode ({ detail }) {
+        this.code = detail.value + ''
+      },
+      toDetail () {
+        wepy.navigateTo({
+          url: `/pages/registerDetail`
+        })
+      },
+      getCode () {
+        if (!this.isEnd) {
+          return
+        }
+
+        if (!this.phone) {
+          return
+        }
+
+        this.getCodeNumber()
+
+        this.count = 60
+        let time = null
+        this.isEnd = false
+        time = setInterval(() => {
+          if (this.count <= 1) {
+            clearInterval(time)
+            this.isEnd = true
+            this.$apply()
+            return
+          }
+          --this.count
+          this.$apply()
+        }, 1000)
+      },
+      toRegister (e) {
+        // 显示加载图标
+        wepy.showLoading({
+          title: '正在注册中'
+        })
+        const { detail } = e
+        const resignCode = wepy.globalData.resign_code
+        const phone = this.phone
+        const code = this.code
+        const { encryptedData, iv, signature, userInfo } = detail
+        api.postRegisterWx({
+          signature,
+          encryptedData,
+          iv,
+          resignCode,
+          phone,
+          smsCode: code
+        }).then(res => {
+          wepy.hideLoading()
+          const token = res.body.token
+          wepy.globalData.token = token
+          util.setStorage('token', token)
+          util.setStorageSync('wechatUserInfo', userInfo)
+          wepy.navigateBack({
+            delta: 2
+          })
+        }, () => {
+          wepy.hideLoading()
+        })
+      }
+    }
+
+    getCodeNumber () {
+      const phone = this.phone
+      const time = new Date().getTime()
+      const key = md5(phone + '' + time + 'weugcSmsKey')
+
+      api.postSms({
+        phone,
+        key,
+        time
+      }).then(json => {
+        console.log(json, ' json')
+      })
+    }
+
+    events = {
+    }
+
+    onLoad(options) {
+      const { phone } = options
+      this.phone = phone || wepy.globalData.phone
+    }
+  }
+</script>

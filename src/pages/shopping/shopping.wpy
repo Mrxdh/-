@@ -1,0 +1,412 @@
+<style lang="scss">
+.disabled {
+    background: #818f99;
+    color: #fff;
+  }
+  .container {
+    padding: 0 20rpx;
+    padding-bottom: 88rpx;
+  }
+  .shopping-item {
+    width: 100%;
+    margin-bottom: 40rpx;
+    background-color: #FCFCFC;
+    box-shadow: -4rpx -4rpx 10rpx 0 rgba(162,162,162, 0.05), 4rpx 4rpx 10rpx 0 rgba(162,162,162, 0.05);
+    border-radius: 6rpx;
+  }
+  .shopping-item-title {
+    padding-bottom: 13rpx;
+    padding-left: 30rpx;
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+    view {
+      font-size: 24rpx;
+      color: #666;
+      margin-right: 20rpx;
+    }
+    .radio {
+      margin-right: 20rpx;
+    }
+    view,
+    .right,
+    .radio {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+
+  .radio {
+    width: 34rpx;
+    height: 34rpx;
+  }
+  .right {
+    width: 12.3rpx;
+    height: 20rpx;
+  }
+  .shopping-item-pro {
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+    height: 160rpx;
+    padding: 30rpx;
+    display: flex;
+  }
+
+  .shopping-item-pr {
+    margin-top: 10rpx;
+    > image {
+      width: 160rpx;
+      height: 141rpx;
+      vertical-align: middle;
+    }
+    .shopping-pro-radio {
+      margin-right: 20rpx;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .shopping-pro-content {
+    padding-left: 28rpx;
+    flex: 1;
+    .shopping-content-top {
+      display: flex;
+      justify-content: space-between;
+
+      >view {
+        flex: 1;
+        font-size: 26rpx;
+        color: #333;
+        margin-right: 20rpx;
+        letter-spacing: 0.59rpx;
+        height: 71rpx;
+      }
+      > image {
+        margin-top: 5rpx;
+        width: 26rpx;
+        height: 26rpx;
+      }
+    }
+  }
+
+  .product-shop-j {
+    width: 60rpx;
+    height: 44rpx;
+  }
+
+  .product-shop-ji {
+    width: 60rpx;
+    height: 44rpx;
+  }
+  .shopping-content-m {
+    font-size: 22rpx;
+    color: #8D9092;
+    margin-top: 10rpx;
+  }
+
+  .shopping-content-b {
+    display: flex;
+    justify-content: space-between;
+    .shopping-content-bl {
+      margin-top: 10rpx;
+      font-size: 28rpx;
+      color: #FF6000;
+    }
+
+    .shopping-content-br {
+      > view {
+        margin: 0 40rpx;
+      }
+      > view,
+      > image {
+        vertical-align: middle;
+        display: inline-block;
+      }
+    }
+  }
+
+  .shopping-submit {
+    height: 88rpx;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 -2rpx 4rpx 0 rgba(0,0,0,0.06);
+    line-height: 88rpx;
+    padding-left: 50rpx;
+    box-sizing: border-box;
+    background-color: #FFF;
+    width: 100%;
+    bottom: 0;
+  }
+
+  .shopping-submit-l {
+    font-size: 24rpx;
+    color: #8D9092;
+    image {
+      margin-right: 27rpx;
+    }
+    > view,image {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+
+  .shopping-submit-r {
+    width: 450rpx;
+    display: flex;
+    justify-content: space-between;
+  }
+  .shopping-submit-rl {
+    > view {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .title {
+      font-size: 26rpx;
+      color: #333;
+    }
+    .price {
+      font-size: 36rpx;
+      color: #FF6000;
+    }
+  }
+
+  .shopping-submit-rr {
+    width: 200rpx;
+    text-align: center;
+    background-color: #FF5400;
+    color: #FFF;
+    font-size: 32rpx;
+  }
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{shoppings}}" key="index" index="index" item="shop">
+      <view class="shopping-item">
+        <view class="shopping-item-title">
+          <image class="radio" @tap="selectShopChecked({{shop}})" src="{{ shop.checked ? 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/gou1@3x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/yuan@3x.png' }}" />
+          <view>
+            {{ shop.shop_name }}
+          </view>
+        </view>
+        <repeat for="{{shop.products}}" key="index" index="index" item="product">
+          <view class="shopping-item-pro">
+            <view class="shopping-item-pr">
+              <view class="shopping-pro-radio">
+                <image class="radio" @tap="selectProductChecked({{product}})" src="{{ product.checked ? 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/gou1@3x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/yuan@3x.png' }}" />
+              </view>
+              <image mode="aspectFill" src="{{product.showpic_url}}" />
+            </view>
+            <view class="shopping-pro-content">
+                <view class="shopping-content-top">
+                  <view>
+                    {{ product.name }}
+                  </view>
+                  <image src="http://p5it0fwv0.bkt.clouddn.com/images/shopping/shanchu@3x.png" @tap="removeProduct({{product}})" />
+                </view>
+                <view class="shopping-content-m">
+                  # {{ product.taste }}
+                </view>
+                <view class="shopping-content-b">
+                  <view class="shopping-content-bl">
+                    ￥{{ product.value / 100 }}
+                  </view>
+                  <view class="shopping-content-br">
+                    <image class="product-shop-j" src="{{ product.productCount <= 1 ? 'http://p5it0fwv0.bkt.clouddn.com/images/home/jian1@2x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/home/jian@2x.png' }}" @tap="subProduct({{product}})" />
+                    <view class="product-shop-count">{{ product.productCount }}</view>
+                    <image class="product-shop-ji" src="http://p5it0fwv0.bkt.clouddn.com/images/home/jia1@2x.png" @tap="addProduct({{product}})" />
+                  </view>
+                </view>
+            </view>
+          </view>
+        </repeat>
+      </view>
+    </repeat>
+    <view class="shopping-submit">
+      <view class="shopping-submit-l" @tap="selectAllChecked">
+        <image class="radio" src="{{ checkedAll ? 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/gou1@3x.png' : 'http://p5it0fwv0.bkt.clouddn.com/images/shopping/yuan@3x.png' }}" />
+        <view>
+          全选
+        </view>
+      </view>
+      <view class="shopping-submit-r">
+        <view class="shopping-submit-rl">
+          <view class="title">
+            合计：
+          </view>
+          <view class="price">
+            ￥{{price / 100}}
+          </view>
+        </view>
+        <view class="shopping-submit-rr {{disabled ? 'disabled': ''}}" @tap="buildOrder">
+          结算({{count}})
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import * as util from '@/util/util'
+  import * as api from '@/server/api'
+
+  export default class Shopping extends wepy.page {
+    config = {
+      navigationBarTitleText: '购物车'
+    }
+    components = {
+    }
+
+    data = {
+      shoppings: [],
+      price: 0,
+      count: 0,
+      checkedAll: false,
+      disabled: false
+    }
+
+    computed = {
+    }
+
+    methods = {
+      removeProduct (product) {
+        this.showShoppings(util.removeProductOfShoppingData(product))
+      },
+      subProduct (product) {
+        if (product.productCount <= 1) {
+          return
+        }
+        this.showShoppings(util.subProductOfShoppingData(product))
+      },
+      addProduct (product) {
+        this.showShoppings(util.addProductOfShoppingData(product), 2)
+      },
+      selectAllChecked () {
+        this.showShoppings(util.updateAllChecked(!this.checkedAll), 2)
+        this.checkedAll = !this.checkedAll
+      },
+      selectShopChecked (shop) {
+        this.showShoppings(util.updateShopChecked(shop))
+      },
+      selectProductChecked (product) {
+        this.showShoppings(util.updateProductChecked(product))
+      },
+      buildOrder () {
+        if (this.disabled === true) {
+          return
+        }
+        this.disabled = true
+        let products = []
+        this.shoppings.map(s => {
+          s.products.map(p => {
+            if (p.checked) {
+              products.push(p)
+            }
+          })
+        })
+        const params = products.map(json => {
+          return {
+            proId: json.pro_id,
+            num: json.productCount
+          }
+        })
+        if (!params.length) {
+          this.disabled = false
+          return wepy.showToast({
+            title: '请先选择商品加入到购物车！',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+
+        this.createOrder(params, products)
+      }
+    }
+
+    createOrder (params, products) {
+      wepy.showLoading({
+        title: '加载中'
+      })
+      api.createOrder({
+        orderJson: JSON.stringify({
+          proids: params
+        }),
+        isNoError: true
+      }).then(({ body, result }) => {
+        wepy.showToast({
+          title: result.msg,
+          duration: 2000
+        })
+        this.showShoppings(util.removeCheckedProductChecked(products))
+        wepy.globalData.orderSuccessData = body
+        wepy.navigateTo({
+          url: './reservationInfo'
+        })
+        this.disabled = false
+        wepy.hideLoading()
+      }, (error) => {
+        const { result } = error
+        const code = result && result.code
+        this.disabled = false
+        wepy.hideLoading()
+        if (code === '-6') {
+          wepy.globalData.orderParams = params
+          wepy.globalData.orderProducts = products
+          wepy.navigateTo({
+            url: `../mine/addAndress?addressFrom=new&type=createOrder`
+          })
+          this.disabled = false
+        }
+      })
+    }
+
+    events = {
+    }
+
+    onLoad() {
+      wepy.setNavigationBarTitle({
+        title: '购物车'
+      })
+    }
+
+    showShoppings (shoppingProduct, type) {
+      this.shoppings = shoppingProduct
+      this.checkCountAndPrice(shoppingProduct)
+      if (type === 2) {
+        return this.$apply()
+      }
+      this.checkedAll = this.isCheckedAll(shoppingProduct)
+      this.$apply()
+    }
+
+    checkCountAndPrice (shoppingProduct) {
+      let price = 0
+      let count = 0
+      shoppingProduct.forEach(s => {
+        s.products.forEach(p => {
+          if (p.checked) {
+            count = count + p.productCount
+            price = price + p.value * p.productCount
+          }
+        })
+      })
+      this.price = price
+      this.count = count
+    }
+
+    isCheckedAll (shoppingProduct) {
+      if (!shoppingProduct.length) {
+        return false
+      }
+      let isChecked = shoppingProduct.find(s => !s.checked)
+      if (!isChecked) {
+        isChecked = shoppingProduct.find(s => s.products.find(p => !p.checked))
+      }
+      return !isChecked
+    }
+
+    onShow () {
+      let shoppingProduct = util.getShoppingProductArrayData()
+      console.log(shoppingProduct, ' shoppingProductshoppingProduct')
+      this.showShoppings(shoppingProduct)
+    }
+  }
+</script>

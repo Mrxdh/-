@@ -1,0 +1,104 @@
+<style lang="scss">
+  .container {
+    > view {
+      width: 100%;
+    }
+  }
+
+  .input-block {
+    display: flex;
+    font-size: 28rpx;
+    color: #666;
+    padding-bottom: 20rpx;
+    border: 1px solod #eee;
+    > view {
+      height: 40rpx;
+      line-height: 40rpx;
+      vertical-align: middle;
+    }
+    input {
+      flex: 1;
+      height: 40rpx;
+      min-height: initial;
+      vertical-align: middle;
+    }
+    padding-left: 40rpx;
+  }
+
+  .btn-c {
+    margin-top: 80rpx;
+    width: 220rpx!important;
+    font-size: 32rpx;
+    line-height: 80rpx;
+    text-align: center;
+    height: 80rpx;
+    background-color: #1E2830;
+    border-radius: 40rpx;
+    color: #fff;
+  }
+
+</style>
+<template>
+  <view class="container">
+      <view class="input-block">
+        <view>手机号：</view>
+        <input type="number" bindinput="changePhone" />
+      </view>
+      <button class="btn-c btn-next" open-type="getUserInfo" bindgetuserinfo="toRegister">下一步</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  @connect({
+  })
+
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '输入手机号'
+    }
+    components = {
+    }
+
+    data = {
+      phone: ''
+    }
+
+    computed = {
+    }
+
+    methods = {
+      toRegister (e) {
+        const { detail } = e
+        if (!/^\d{11}$/.test(this.phone)) {
+          return wepy.showToast({
+            icon: 'none',
+            title: '请输入正确的手机号！'
+          })
+        }
+
+        if (detail.errMsg === 'getUserInfo:fail auth deny') {
+          return wepy.showToast({
+            icon: 'none',
+            title: '请接收授权！'
+          })
+        }
+        wepy.globalData.userInfo = e.detail.userInfo
+        wepy.globalData.phone = this.phone
+        wepy.navigateTo({
+          url: `/pages/register?phone=${this.phone}`
+        })
+      },
+      changePhone ({ detail }) {
+        this.phone = detail.value + ''
+      }
+    }
+
+    events = {
+    }
+
+    onLoad() {
+    }
+  }
+</script>

@@ -1,0 +1,298 @@
+<style lang="scss">
+  .home-swiper {
+    width: 100%;
+    height: 496rpx;
+    padding: 0 25rpx;
+    box-sizing: border-box;
+  }
+
+  .slide-box {
+    padding: 16rpx 20rpx 5rpx;
+    box-sizing: border-box;
+  }
+
+  .container {
+    padding: 0 45rpx;
+    width: 100%;
+    > view {
+      width: 100%;
+    }
+  }
+  .slide-image {
+    width: 100%;
+    height: 372rpx;
+    box-shadow: 1px 1px 10px 0 rgba(162, 162, 162, 0.4);
+    border-radius: 20rpx;
+  }
+
+  .home-swiper-text {
+    margin-top: 20rpx;
+    .title {
+      font-size: 32rpx;
+      font-weight: bold;
+    }
+    .time {
+      font-size: 26rpx;
+      color: #AEB1B4;
+    }
+  }
+
+  .home-about {
+    margin-top: 40rpx;
+  }
+
+  .home-about-item {
+    display: inline-block;
+    width: 312rpx;
+    height: 110rpx;
+    border-radius: 10rpx;
+    box-shadow: 1px 1px 10px 0 rgba(162, 162, 162, 0.15);
+    image {
+      width: 76rpx;
+      height: 76rpx;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+
+    .title-box {
+      display: inline-block;
+      font-size: 28rpx;
+      padding: 20rpx 0 17rpx 30rpx;
+      vertical-align: middle;
+      margin-right: 22rpx;
+    }
+
+    .title-about {
+      font-size: 24rpx;
+      color: #999999;
+    }
+    &:first-child {
+      float: left;
+    }
+    &:last-child {
+      float: right;
+    }
+  }
+
+  .home-product-header {
+    margin-top: 40rpx;
+    display: flex;
+    justify-content:space-between;
+    .product-header-il {
+        width: 4rpx;
+        height: 30rpx;
+        display: inline-block;
+        background: #B6BEC4;
+        vertical-align: middle;
+        margin-right: 6rpx;
+    }
+    .product-header-ir {
+        width: 30rpx;
+        height: 30rpx;
+        margin-top: 6rpx;
+    }
+    view {
+      font-size: 26rpx;
+        color: #2B3137;
+        vertical-align: middle;
+        display: inline-block;
+    }
+  }
+  .home-product {
+    margin-top: 43rpx;
+    height: 240rpx;
+  }
+</style>
+<template>
+  <swiper
+      class="home-swiper"
+      indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" 
+      interval="{{interval}}" 
+      circular="{{true}}"
+      duration="{{duration}}"
+    >
+      <block wx:for="{{banner}}">
+        <swiper-item class="slide-box" @tap="toBanner({{item}})">
+          <image mode="aspectFill" src="{{item.pic}}" class="slide-image"/>
+          <view class="home-swiper-text">
+            <view class="title">
+              {{item.title}}
+            </view>
+            <view class="time">
+              {{item.content}}
+            </view>
+            <view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  <view class="container">
+    <view class="home-about">
+      <view class="home-about-item" @tap="aboutXlx">
+        <view class="title-box">
+          <view>
+          关于小龙虾
+          </view>
+          <view class="title-about">
+            About
+          </view>
+        </view>
+        <image mode="aspectFill" src="http://p5it0fwv0.bkt.clouddn.com/images/home/Bitmap.png" alt="avatar" />
+      </view>
+      <view class="home-about-item" @tap="toShops">
+        <view class="title-box" style="margin-right:30rpx;">
+          <view>
+            全部商家
+          </view>
+          <view class="title-about">
+            About
+          </view>
+        </view>
+        <image mode="aspectFill" src="http://p5it0fwv0.bkt.clouddn.com/images/home/Bitmap2.png" alt="avatar" />
+      </view>
+    </view>
+    <view class="home-product-header">
+        <view>
+          <view class="product-header-il">
+          </view>
+          <view>随性的吃货</view>
+        </view>
+        <!-- <image class="product-header-ir" src="http://p5it0fwv0.bkt.clouddn.com/images/home/gezi@2x.png" /> -->
+    </view>
+    <view class="home-product">
+      <repeat for="{{products}}" key="index" index="index" item="item">
+        <product :product.sync="item" />
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Product from '@/view/product'
+  import * as api from '@/server/api'
+  import * as util from '@/util/util'
+  @connect({
+  })
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '对味儿',
+      enablePullDownRefresh: true
+    }
+    components = {
+      product: Product
+    }
+
+    data = {
+      indicatorDots: false,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000,
+      banner: [{ pic: 'http://img02.tooopen.comhttp://p5it0fwv0.bkt.clouddn.com/images/20150928/tooopen_sy_143912755726.jpg', url: '' }],
+      paegInfo: {},
+      products: [],
+      currentPage: 1,
+      pageSize: 10
+    }
+
+    methods = {
+      toShops () {
+        wepy.navigateTo({
+          url: '/pages/shops'
+        })
+      },
+      aboutXlx () {
+        wepy.navigateTo({
+          url: '/pages/introduce'
+        })
+      },
+      toBanner (banner) {
+        wepy.globalData.bannerInfo = banner
+        wepy.navigateTo({
+          url: '/pages/banner'
+        })
+      }
+    }
+
+    computed = {
+    }
+
+    events = {
+    }
+
+    onShow () {
+    }
+    onReachBottom () {
+      if (!this.pageInfo) {
+        return
+      }
+      const params = util.nextPageParams(this.pageInfo.info)
+
+      if (params.status === 'full') {
+        return
+      }
+      // 显示加载图标
+      wepy.showLoading({
+        title: '玩命加载中'
+      })
+      this.getIndexData(params).then(body => {
+        wepy.hideLoading()
+        if (!(body.products && body.products.length)) {
+          return
+        }
+        this.pageInfo = body.pageInfo
+        this.products = this.products.concat(body.products)
+        this.$apply()
+      }, () => {
+        wepy.hideLoading()
+      })
+    }
+    onPullDownRefresh () {
+      // 显示顶部刷新图标
+      wepy.showNavigationBarLoading()
+      this.initData().then(() => {
+        wepy.hideNavigationBarLoading()
+        setTimeout(() => {
+          wepy.stopPullDownRefresh()
+        }, 1000)
+      }, () => {
+        wepy.hideNavigationBarLoading()
+        wepy.stopPullDownRefresh()
+      })
+    }
+    initData () {
+      return this.getIndexData({
+        currentPage: 1,
+        pageSize: this.pageSize
+      }).then((body) => {
+        const { banner, pageInfo, products } = body
+        this.banner = banner
+        this.pageInfo = pageInfo
+        this.products = products
+        this.$apply()
+        wepy.hideLoading()
+      }, () => {
+        wepy.hideLoading()
+      })
+    }
+
+    getIndexData (params) {
+      return new Promise((resolve, reject) => {
+        api.getIndex(params).then(({ body }) => {
+          resolve(body)
+        }, reject)
+      })
+    }
+
+    onLoad() {
+      wepy.showLoading({
+        title: '加载中'
+      })
+      this.initData()
+    }
+  }
+</script>

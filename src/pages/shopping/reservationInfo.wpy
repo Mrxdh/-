@@ -1,0 +1,456 @@
+<style lang="scss">
+  .container {
+    padding: 0 30rpx;
+  }
+  .container > view {
+    width: 100%;
+  }
+  .user-address-hl {
+    image {
+      width: 30.6rpx;
+      height: 36.8rpx;
+      margin-right: 33rpx;
+      vertical-align: middle;
+    }
+    view {
+      font-size: 30rpx;
+      color: #333;
+      vertical-align: middle;
+    }
+  }
+  .user-address-hr {
+    view {
+      font-size: 30rpx;
+      color: #333;
+      margin-right: 16rpx;
+      vertical-align: middle;
+    }
+    image {
+      width: 16rpx;
+      height: 26rpx;
+      vertical-align: middle;
+    }
+  }
+
+  .user-address-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20rpx;
+    >view {
+      > view {
+        display: inline-block;
+      }
+    }
+  }
+
+  .user-address-bottom {
+    padding-left: 64rpx;
+    font-size: 26rpx;
+    color: #333;
+    display: flex;
+    margin-bottom: 20rpx;
+    view {
+      display: inline-block;
+      &:last-child {
+        flex: 1;
+      }
+    }
+  }
+  .user-reservation-item {
+    margin-bottom: 40rpx;
+  }
+  .user-reservation-it {
+    font-size: 24rpx;
+    color: #666;
+    padding-bottom: 12rpx;
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+    image {
+      width: 12.2rpx;
+      height: 19.9rpx;
+      vertical-align: middle;
+      margin-left: 10.1rpx;
+    }
+    view {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .user-reservation-ib {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30rpx;
+    padding-left: 40rpx;
+    padding-top: 23rpx;
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+    image {
+      width: 157rpx;
+      height: 141rpx;
+      margin-right: 27rpx;
+    }
+
+    > view {
+      flex: 1;
+    }
+  }
+
+  .user-reservation-bt {
+    font-size: 26rpx;
+    color: #333;
+    letter-spacing: 0.59rpx;
+  }
+  .user-reservation-bty {
+    font-size: 22rpx;
+    color: #8D9092;
+    letter-spacing: 0.96rpx;
+  }
+
+  .user-reservation-bts {
+    font-size: 28rpx;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user-reservation-btsc {
+    font-size: 24rpx;
+    color: #8d9092;
+  }
+
+  .user-bx{
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 30rpx;
+    color: #333;
+    padding: 30rpx 16rpx;
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .user-leavewords {
+    background: #F6F7F7;
+    border-radius: 5rpx;
+    padding: 24rpx 0;
+    font-size: 28rpx;
+    color: #999;
+    padding-left: 20rpx;
+  }
+
+  .user-details {
+    padding: 30rpx 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(30, 40, 48, 0.05);
+  }
+
+  .user-details-t {
+    font-size: 26rpx;
+    color: #4A4A4A;
+    text-align: right;
+    >view {
+      display: inline-block;
+    }
+    .user-details-tb {
+      font-size: 36rpx;
+      color: #ff6000;
+    }
+  }
+
+  .user-details-b {
+    font-size: 24rpx;
+    text-align: right;
+    letter-spacing: 0.9rpx;
+    color: #8d9092;
+    margin-top: 20rpx;
+  }
+
+  .user-hint {
+    image {
+      width: 62rpx;
+      height: 32rpx;
+      margin-top: 33rpx;
+      margin-bottom: 11rpx;
+    }
+    view {
+      font-size: 24rpx;
+      color: #8d9092;
+      letter-spacing: 0.9rpx;
+    }
+    margin-bottom: 150rpx;
+  }
+
+  .user-btn {
+    display: flex;
+    justify-content: space-between;
+    font-size: 26rpx;
+    position: fixed;
+    z-index: 999;
+    bottom: 0;
+    background: #fff;
+    color: #333;
+    .user-btn-l {
+      padding: 30rpx 0;
+      margin-left: 50rpx;
+      > view {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .user-btn-lr {
+        font-size: 36rpx;
+        color: #ff6000;
+      }
+    }
+
+    .user-btn-r {
+      width: 240rpx;
+      padding: 30rpx 0;
+      text-align: center;
+      background: #FF5400;
+      color: #FFF;
+      font-size: 32rpx;
+    }
+  }
+  .disabled {
+    background: #818f99;
+    color: #fff;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="user-address" @tap="toChooseAddress">
+      <view class="user-address-header">
+        <view class="user-address-hl">
+          <image src="http://p5it0fwv0.bkt.clouddn.com/images/shopping/dizhi@3x.png" alt="right" />
+          <view>
+              收货人：{{address.name}}
+          </view>
+        </view>
+        <view class="user-address-hr">
+            <view>
+                {{address.phone}}
+            </view>
+            <image src="http://p5it0fwv0.bkt.clouddn.com/images/shopping/you_da@3x.png" />
+        </view>
+      </view>
+      <view class="user-address-bottom">
+        <view>
+            收货地址：
+        </view>
+        <view>
+            {{address.address}}
+        </view>
+      </view>
+    </view>
+    <repeat for="{{orderInfo}}" key="index" index="index" item="item">
+      <view class="user-reservation-item">
+        <view class="user-reservation-it">
+            <view>
+                {{ item.shopName }}
+            </view>
+            <image src="http://p5it0fwv0.bkt.clouddn.com/images/shopping/you_xiao@3x.png" />
+        </view>
+        <repeat for="{{item.proInfo}}" key="index" index="index" item="product">
+          <view class="user-reservation-ib">
+            <image src="{{product.pre_pic_url}}" />
+            <view>
+                <view class="user-reservation-bt">
+                    {{product.proName}}
+                </view>
+                <view class="user-reservation-bty">
+                    # {{product.taste}}
+                </view>
+                <view class="user-reservation-bts">
+                    <view>
+                        ￥{{product.value / 100}}
+                    </view>
+                    <view class="user-reservation-btsc">
+                        x{{product.buyNum}}
+                    </view>
+                </view>
+            </view>
+          </view>
+        </repeat>
+      </view>
+    </repeat>
+    
+    <view class="user-bx">
+        <view>
+            配送方式
+        </view>
+        <view>
+            {{transport.mode}}￥{{transport.value / 100}}
+        </view>
+    </view>
+    <view class="user-bx">
+        <view>
+            配送时间
+        </view>
+        <view>
+            {{ transport.time }}
+        </view>
+    </view>
+    <view class="user-bx">
+        <view>
+            开具发票
+        </view>
+        <view>
+            联系客服
+        </view>
+    </view>
+    <view class="user-leavewords">
+        <input type="text" placeholder="卖家留言: 对商品有其他要求可再次备注" bindchange="bindUserMsg" />
+    </view>
+    <view class="user-details">
+      <view class="user-details-t">
+        <view>
+            {{orderMsg}}
+        </view>
+        <view class="user-details-tb">
+            ￥{{ orderValue / 100 }}
+        </view>
+      </view>
+      <view class="user-details-b">
+          (包含快递费用)
+      </view>
+    </view>
+    <view class="user-hint">
+      <image src="http://p5it0fwv0.bkt.clouddn.com/images/shopping/tishi@3x.png" />
+      <view>
+        所有发送快递的商品都会真空封装包装，并配有冰袋。若用户收到商品后发现包装破损请及时联系客服。
+      </view>
+    </view>
+    <view class="user-btn">
+      <view class="user-btn-l">
+        <view>
+          合计：
+        </view>
+        <view class="user-btn-lr">
+          ￥{{ orderValue / 100 }}
+        </view>
+      </view>
+      <view class="user-btn-r {{disabled ? 'disabled': ''}}" @tap="orderPay">
+        提交订单
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import * as api from '@/server/api'
+  import * as util from '@/util/util'
+  
+  @connect({
+  })
+
+  export default class ReservationInfo extends wepy.page {
+    config = {
+      navigationBarTitleText: '订单详情'
+    }
+    components = {
+    }
+
+    data = {
+      transport: {},
+      orderMsg: '',
+      orderInfo: [],
+      orderId: null,
+      orderKey: null,
+      address: {},
+      orderValue: 0,
+      userMeasage: '',
+      disabled: false
+    }
+
+    computed = {
+    }
+
+    methods = {
+      bindUserMsg (e) {
+        console.log(e.detail.value)
+        this.userMeasage = e.detail.value
+      },
+      toChooseAddress () {
+        wepy.navigateTo({
+          url: `/pages/mine/userAndress?mode=choose`
+        })
+      },
+      orderPay () {
+        if (this.disabled === true) {
+          return
+        }
+        this.disabled = true
+        api.payOrder({
+          orderNo: this.orderId,
+          orderKey: this.orderKey,
+          userMeasage: this.userMeasage
+        }).then(json => {
+          // pages/shopping/paySuccess
+          const { body, result } = json
+          if (result.code !== '1') {
+            this.disabled = false
+            return
+          }
+
+          // wepy.redirectTo({
+          //     url: `/pages/shopping/paySuccess?orderNo=${body.orderNo}&orderValue=${this.orderValue}`
+          //   })
+          // this.disabled = false
+
+          util.toPay(body).then(json => {
+            wepy.redirectTo({
+              url: `/pages/shopping/paySuccess?orderNo=${body.orderNo}&orderValue=${this.orderValue}`
+            })
+            this.disabled = false
+          }, () => {
+            api.orderRefreshKey({
+              orderNo: this.orderId
+            }).then(json => {
+              console.log(json, '  jsonjson')
+            })
+            this.disabled = false
+          })
+        }, () => {
+          setTimeout(() => {
+            this.disabled = false
+          }, 2000)
+        })
+      }
+    }
+
+    events = {
+    }
+
+    onShow () {
+      if (wepy.globalData.chooseAddress) {
+        api.updateOrderAddress({
+          orderNo: this.orderId,
+          addrId: wepy.globalData.chooseAddress.id
+        }).then(({ body, result }) => {
+          this.loadData(body)
+        })
+        wepy.globalData.chooseAddress = null
+      }
+    }
+
+    loadData (orderData) {
+      const { transport, orderInfo, address, orderId, orderMsg, orderKey, orderValue } = orderData
+      this.transport = transport
+      this.orderMsg = orderMsg
+      this.orderInfo = orderInfo
+      this.orderId = orderId
+      this.orderKey = orderKey
+      this.address = address
+      this.orderValue = parseFloat(orderValue) + parseFloat(transport.value)
+      this.$apply()
+    }
+
+    onLoad() {
+      const orderData = wepy.globalData.orderSuccessData || {}
+      this.loadData(orderData)
+    }
+  }
+</script>

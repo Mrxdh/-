@@ -1,0 +1,127 @@
+<style lang="scss">
+	.review-item {
+        padding-top: 30rpx;
+        padding-bottom: 40rpx;
+        border-bottom: 1px solid rgba(162, 162, 162, 0.2);
+    }
+    .review-item-t {
+        display: flex;
+        justify-content: space-between;
+
+        .review-t-date {
+            font-size: 22rpx;
+            color: #999;
+        }
+    }
+
+    .review-t-content {
+        > image {
+            margin-right: 20rpx;
+            width: 70rpx;
+            height: 70rpx;
+            vertical-align: middle;
+        }
+        > view {
+            vertical-align: middle;
+            display: inline-block;
+            height: 70rpx;
+        }
+
+        .review-t-name {
+            font-size: 26rpx;
+            color: #333;
+        }
+
+        .review-t-r {
+            font-size: 22rpx;
+            color: #999;
+            > view {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 14rpx;
+            }
+            image {
+                vertical-align: middle;
+                width: 24rpx;
+                height: 24rpx;
+            }
+        }
+    }
+
+    .review-item-m {
+        margin-top: 21rpx;
+        font-size: 28rpx;
+        color: #333;
+        margin-bottom: 20rpx;
+    }
+
+    .review-item-images {
+        // display: flex;
+        // justify-content: space-between;
+        image {
+            margin-right: 28rpx;
+            height: 150rpx;
+            width: 202rpx;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+</style>
+<template>
+    <view class="review-item">
+        <view class="review-item-t">
+            <view class="review-t-content">
+                <image mode="aspectFill" src="{{ reviewObj.head_url }}" />
+                <view>
+                    <view class="review-t-name">
+                        {{ reviewObj.user }}
+                    </view>
+                    <view class="review-t-r">
+                        <view>
+                            评价:
+                        </view>
+                        <repeat for="{{reviewObj.starts}}" key="index" index="index" item="image">
+                          <image src="http://p5it0fwv0.bkt.clouddn.com/images/home/star1@2x.png" />
+                        </repeat>
+                    </view>
+                </view>
+            </view>
+            <view class="review-t-date">
+                {{ reviewObj.create_time }}
+            </view>
+        </view>
+        <view class="review-item-m">
+            {{ reviewObj.content }}
+        </view>
+        <view class="review-item-images">
+            <repeat for="{{reviewObj.comment_pic}}" key="index" index="index" item="image">
+              <image mode="aspectFill" src="{{ image.pic_url }}" @tap="chooseImage({{image}})" />
+            </repeat>
+        </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Review extends wepy.component {
+    props = {
+      reviewObj: {
+        type: Object,
+        default: {}
+      }
+    }
+
+    components = {
+    }
+    methods = {
+      chooseImage (image) {
+        console.log(image, ' imageimage')
+        wepy.previewImage({
+          current: image.pic_url, // 当前显示图片的http链接
+          urls: this.reviewObj.comment_pic.map(json => json.pic_url) // 需要预览的图片http链接列表
+        })
+      }
+    }
+  }
+</script>
